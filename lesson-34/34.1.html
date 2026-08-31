@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وانەی کوردیی سۆرانی - پەڕەی ۳۴ | وەرزش، خواردن و خواردنەوە</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --error: #ef4444;
+            --error-light: #fee2e2;
+            --accent: #f59e0b;
+            --accent-light: #fef3c7;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --radius: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #0b0f19;
+            --bg-card: #151d2f;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #243049;
+            --primary-light: #1e293b;
+            --success-light: #064e3b;
+            --error-light: #7f1d1d;
+            --accent-light: #451a03;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.75; padding-bottom: 70px; }
+
+        header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #0d9488);
+            color: white; padding: 30px 20px; text-align: center; position: relative;
+            box-shadow: var(--shadow); border-bottom: 4px solid #f59e0b;
+        }
+
+        .theme-btn {
+            position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4); color: white; padding: 6px 12px;
+            border-radius: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 700;
+        }
+
+        .container { max-width: 950px; margin: 0 auto; padding: 20px 16px; }
+
+        .score-box {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 14px 20px; margin-bottom: 20px; display: flex; justify-content: space-between;
+            align-items: center; box-shadow: var(--shadow); flex-wrap: wrap; gap: 12px;
+        }
+
+        .score-pill { background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: 1.15rem; padding: 4px 14px; border-radius: 10px; }
+
+        .nav-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 20px; }
+        .tab-btn {
+            background: var(--bg-card); border: 1.5px solid var(--border); color: var(--text-muted);
+            padding: 10px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--primary); border-color: var(--primary); }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow); }
+        .card-title { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 14px; }
+        .desc { background: var(--bg-main); padding: 12px 16px; border-radius: 10px; border-right: 4px solid var(--primary); margin-bottom: 20px; font-size: 0.95rem; color: var(--text-muted); }
+
+        .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+        .filter-btn {
+            background: var(--bg-main); border: 1.5px solid var(--border); padding: 7px 14px;
+            border-radius: 20px; font-weight: 700; font-size: 0.9rem; cursor: pointer; color: var(--text-main);
+        }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 20px; }
+        .match-card {
+            background: var(--bg-main); border: 1.5px solid var(--border); border-radius: 14px;
+            padding: 18px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+        }
+        .match-card .icon { font-size: 3.2rem; line-height: 1.2; margin-bottom: 6px; }
+        .match-card .category-tag {
+            font-size: 0.78rem; font-weight: 800; padding: 2px 8px; border-radius: 6px; margin-bottom: 8px; display: inline-block;
+        }
+        .tag-sport { background: rgba(37, 99, 235, 0.15); color: #2563eb; }
+        .tag-food { background: rgba(245, 158, 11, 0.15); color: #d97706; }
+        .tag-drink { background: rgba(16, 185, 129, 0.15); color: #059669; }
+
+        .select-box {
+            width: 100%; background: var(--bg-card); border: 1.5px solid var(--border);
+            color: var(--text-main); padding: 8px 12px; border-radius: 8px; font-weight: 700;
+            margin-top: 10px; outline: none; text-align: center; font-size: 0.95rem; cursor: pointer;
+        }
+        .select-box.correct { background: var(--success-light) !important; border-color: var(--success) !important; color: #065f46 !important; }
+        .select-box.wrong { background: var(--error-light) !important; border-color: var(--error) !important; color: #991b1b !important; }
+
+        .fb-msg { font-size: 0.85rem; margin-top: 6px; font-weight: 700; display: none; width: 100%; }
+        .fb-msg.show { display: block; }
+
+        .cat-game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 20px; }
+        .cat-column {
+            background: var(--bg-main); border: 2px dashed var(--border); border-radius: 14px;
+            padding: 16px; min-height: 240px;
+        }
+        .cat-header { font-size: 1.1rem; font-weight: 800; text-align: center; padding-bottom: 8px; margin-bottom: 12px; border-bottom: 2px solid var(--border); }
+        .cat-item-chip {
+            background: var(--bg-card); border: 1px solid var(--border); padding: 8px 12px;
+            border-radius: 8px; margin-bottom: 6px; font-weight: 700; display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .table-wrap { overflow-x: auto; margin-top: 14px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: right; }
+        th { background: var(--bg-main); color: var(--primary); font-weight: 800; }
+
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #1e293b; color: white; padding: 10px 20px; border-radius: 9999px;
+            font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; z-index: 2000; opacity: 0;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 دۆخی تاریک</button>
+        <div style="font-size: 0.85rem; font-weight: 700; opacity: 0.9; margin-bottom: 4px;">فێرکاریی زمانی کوردیی سۆرانی • پەڕەی ۳۴</div>
+        <h1 style="font-size: 1.8rem; font-weight: 900;">وەرزش، خواردن و خواردنەوە (ڕاهێنانی ۶-۷)</h1>
+        <p style="font-size: 0.95rem; opacity: 0.95;">ناسینەوەی وێنەکان، پۆلێنکردنی وشەکان، و ڕستەسازی بە کوردیی سۆرانی و کورمانجی</p>
+    </header>
+
+    <div class="container">
+        <div class="score-box">
+            <div>
+                <span style="font-weight: 700; color: var(--text-muted);">نمرەی ڕاهێنانەکان:</span>
+                <span class="score-pill" id="scoreDisplay">۰ / ۱۸</span>
+            </div>
+            <button onclick="resetExercise()" style="background:var(--bg-main); border:1px solid var(--border); padding:6px 14px; border-radius:8px; cursor:pointer; font-weight:700;">🔄 دەستپێکردنەوە</button>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('tab1', this)">🖼️ ۱. ڕاهێنانی ۶-۷ (وێنە و وشە)</button>
+            <button class="tab-btn" onclick="switchTab('tab2', this)">🗂️ ۲. پۆلێنکردنی وشەکان</button>
+            <button class="tab-btn" onclick="switchTab('tab3', this)">✍️ ۳. ڕستەسازی (حەزلێکردن)</button>
+            <button class="tab-btn" onclick="switchTab('tab4', this)">📚 ۴. فەرهەنگۆکی سۆرانی - کورمانجی</button>
+        </div>
+
+        <!-- TAB 1: Exercise 6-7 Match -->
+        <div id="tab1" class="tab-pane active">
+            <div class="card">
+                <div class="card-title">🖼️ ڕاهێنانی ٦-٧: وشەی گونجاو لە ژێر وێنەی گونجاودا بنووسە</div>
+                <div class="desc"><strong>ڕێنمایی:</strong> سەیری وێنەکە بکە و لە لیستی وشەکاندا، وشەی گونجاو بە زمانی سۆرانی دیاری بکە. دەتوانیت بە فلتەرەکانی خوارەوە پۆلەکان جیا بکەیتەوە.</div>
+
+                <div class="filter-bar">
+                    <button class="filter-btn active" onclick="filterCards('all', this)">🌟 هەموو وێنەکان (۱۸)</button>
+                    <button class="filter-btn" onclick="filterCards('وەرزش', this)">⚽ وەرزش و کایەکان (۶)</button>
+                    <button class="filter-btn" onclick="filterCards('خواردن', this)">🥗 خواردن (۶)</button>
+                    <button class="filter-btn" onclick="filterCards('خواردنەوە', this)">🥤 خواردنەوە (۶)</button>
+                </div>
+
+                <div class="match-grid" id="matchGrid"></div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Categorization Explorer -->
+        <div id="tab2" class="tab-pane">
+            <div class="card">
+                <div class="card-title">🗂️ پۆلێنکردنی وشەکانی پەڕەی ۳۴ بەپێی بابەت</div>
+                <div class="desc"><strong>پۆلە سەرەکییەکان:</strong> هەر ۱۸ وشەکەی پەڕەی ۳۴ لە سێ پۆلی سەرەکیدا ڕێکخراون:</div>
+
+                <div class="cat-game-grid">
+                    <div class="cat-column" style="border-color:#2563eb;">
+                        <div class="cat-header" style="color:#2563eb;">⚽ وەرزش و کایەکان (Sports)</div>
+                        <div class="cat-item-chip"><span>جۆلانە</span> <span style="color:var(--text-muted); font-style:italic;">Hêlik / Tab</span></div>
+                        <div class="cat-item-chip"><span>هەڵماقۆ</span> <span style="color:var(--text-muted); font-style:italic;">Lîstika kevirikan</span></div>
+                        <div class="cat-item-chip"><span>مەلە</span> <span style="color:var(--text-muted); font-style:italic;">Avjenî / Melevanî</span></div>
+                        <div class="cat-item-chip"><span>دۆمینە</span> <span style="color:var(--text-muted); font-style:italic;">Domîno</span></div>
+                        <div class="cat-item-chip"><span>تۆپی پێ</span> <span style="color:var(--text-muted); font-style:italic;">Futbol / Goga pê</span></div>
+                        <div class="cat-item-chip"><span>تێنس</span> <span style="color:var(--text-muted); font-style:italic;">Tenîs / Masa tenîsê</span></div>
+                    </div>
+
+                    <div class="cat-column" style="border-color:#d97706;">
+                        <div class="cat-header" style="color:#d97706;">🥗 خواردن (Food)</div>
+                        <div class="cat-item-chip"><span>دۆندرمە</span> <span style="color:var(--text-muted); font-style:italic;">Qeşot / Qeşe</span></div>
+                        <div class="cat-item-chip"><span>دۆڵمە</span> <span style="color:var(--text-muted); font-style:italic;">Yaprax / Dolme</span></div>
+                        <div class="cat-item-chip"><span>لەفە</span> <span style="color:var(--text-muted); font-style:italic;">Sendewîç / Lefe</span></div>
+                        <div class="cat-item-chip"><span>کەباب</span> <span style="color:var(--text-muted); font-style:italic;">Kebap / Kebab</span></div>
+                        <div class="cat-item-chip"><span>پرتەقاڵ</span> <span style="color:var(--text-muted); font-style:italic;">Porteqal</span></div>
+                        <div class="cat-item-chip"><span>سێو</span> <span style="color:var(--text-muted); font-style:italic;">Sêv</span></div>
+                    </div>
+
+                    <div class="cat-column" style="border-color:#059669;">
+                        <div class="cat-header" style="color:#059669;">🥤 خواردنەوە (Drinks)</div>
+                        <div class="cat-item-chip"><span>شیر</span> <span style="color:var(--text-muted); font-style:italic;">Şîr</span></div>
+                        <div class="cat-item-chip"><span>ماستاو</span> <span style="color:var(--text-muted); font-style:italic;">Dew / Do</span></div>
+                        <div class="cat-item-chip"><span>چا</span> <span style="color:var(--text-muted); font-style:italic;">Çay</span></div>
+                        <div class="cat-item-chip"><span>ئاو</span> <span style="color:var(--text-muted); font-style:italic;">Av</span></div>
+                        <div class="cat-item-chip"><span>شەربەت</span> <span style="color:var(--text-muted); font-style:italic;">Ava fêkiyan / Şerbet</span></div>
+                        <div class="cat-item-chip"><span>قاوە</span> <span style="color:var(--text-muted); font-style:italic;">Qehwe</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Sentence Builder -->
+        <div id="tab3" class="tab-pane">
+            <div class="card">
+                <div class="card-title">✍️ دروستکردنی ڕستە: دەربڕینی حەزلێکردن (Hezkirin)</div>
+                <div class="desc"><strong>ڕێنمایی:</strong> کەس و بابەتی دڵخواز هەڵبژێرە تا ڕستەی ئەرێ (حەز لێ دەکەم) یان نەرێ (حەز لێ ناکەم) بە سۆرانی و کورمانجی دروست ببێت.</div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:12px; margin-bottom:16px;">
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">کەس (بکەر):</label>
+                        <select id="sbjSelect" class="select-box" style="margin-top:4px;" onchange="buildSentence()">
+                            <option value="من">من (Ez)</option>
+                            <option value="تۆ">تۆ (Tu)</option>
+                            <option value="ئازاد">ئازاد (Azad)</option>
+                            <option value="ئێمە">ئێمە (Em)</option>
+                            <option value="ئێوە">ئێوە (Hûn)</option>
+                            <option value="ئەوان">ئەوان (Ew)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">جۆری دەربڕین:</label>
+                        <select id="typeSelect" class="select-box" style="margin-top:4px;" onchange="buildSentence()">
+                            <option value="pos">حەز لێکردن (ئەرێ / Hezkirin)</option>
+                            <option value="neg">حەز لێنەکردن (نەرێ / Nehezkirin)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">بابەت (وەرزش / خواردن):</label>
+                        <select id="itemSelect" class="select-box" style="margin-top:4px;" onchange="buildSentence()">
+                            <option value="تۆپی پێ">تۆپی پێ (Futbol)</option>
+                            <option value="تێنس">تێنس (Tenîs)</option>
+                            <option value="مەلە">مەلە (Avjenî)</option>
+                            <option value="کەباب">کەباب (Kebab)</option>
+                            <option value="دۆڵمە">دۆڵمە (Dolme)</option>
+                            <option value="دۆندرمە">دۆندرمە (Qeşot)</option>
+                            <option value="چا">چا (Çay)</option>
+                            <option value="ماستاو">ماستاو (Dew)</option>
+                            <option value="قاوە">قاوە (Qehwe)</option>
+                            <option value="شەربەت">شەربەت (Ava fêkiyan)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="background:var(--bg-main); border:1.5px solid var(--primary); border-radius:12px; padding:18px; text-align:center;">
+                    <div id="resSoranî" style="font-size:1.3rem; font-weight:800; color:var(--primary); margin-bottom:6px;">من حەز لە تۆپی پێ دەکەم.</div>
+                    <div id="resKurmanjî" style="font-size:1rem; color:var(--text-muted); font-style:italic;">Ez ji futbolê hez dikim.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: Vocabulary Reference Table -->
+        <div id="tab4" class="tab-pane">
+            <div class="card">
+                <div class="card-title">📚 فەرهەنگۆکی وشەکانی پەڕەی ۳۴ (سۆرانی - کورمانجی)</div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>وشەی سۆرانی</th><th>پۆلێن (بابەت)</th><th>واتا بە کوردیی کورمانجی</th><th>نموونەی ڕستە</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>جۆلانە</strong></td><td>وەرزش و کایە</td><td><strong>hêlik / tab</strong></td><td>منداڵەکان لەسەر جۆلانەن (Zarok li ser hêlikê ne)</td></tr>
+                            <tr><td><strong>هەڵماقۆ</strong></td><td>وەرزش و کایە</td><td><strong>lîstika kevirikan</strong></td><td>ئەوان هەڵماقۆ دەکەن (Ew lîstika kevirikan dileyizin)</td></tr>
+                            <tr><td><strong>مەلە</strong></td><td>وەرزش و کایە</td><td><strong>avjenî / melevanî</strong></td><td>من حەز لە مەلە دەکەم (Ez ji avjeniyê hez dikim)</td></tr>
+                            <tr><td><strong>دۆمینە</strong></td><td>وەرزش و کایە</td><td><strong>domîno</strong></td><td>باوکم دۆمینە دەکات (Bavê min domîno dileyize)</td></tr>
+                            <tr><td><strong>تۆپی پێ</strong></td><td>وەرزش و کایە</td><td><strong>futbol / goga pê</strong></td><td>ئازاد یاریی تۆپی پێ دەکات (Azad futbole dileyize)</td></tr>
+                            <tr><td><strong>تێنس</strong></td><td>وەرزش و کایە</td><td><strong>tenîs / masa tenîsê</strong></td><td>ئەوان تێنس دەکەن (Ew tenîsê dileyizin)</td></tr>
+                            <tr><td><strong>دۆندرمە</strong></td><td>خواردن</td><td><strong>qeşot / qeşe</strong></td><td>دۆندرمەی فێنک (Qeşota hênik)</td></tr>
+                            <tr><td><strong>دۆڵمە</strong></td><td>خواردن</td><td><strong>yaprax / dolme</strong></td><td>دۆڵمەی بەتام (Dolmeya bêtam)</td></tr>
+                            <tr><td><strong>لەفە</strong></td><td>خواردن</td><td><strong>sendewîç / lefe</strong></td><td>لەفەی کەباب (Sendewîça kebabê)</td></tr>
+                            <tr><td><strong>کەباب</strong></td><td>خواردن</td><td><strong>kebap / kebab</strong></td><td>کەبابی گەرم (Kebabê germ)</td></tr>
+                            <tr><td><strong>پرتەقاڵ</strong></td><td>خواردن</td><td><strong>porteqal</strong></td><td>پرتەقاڵی شیرین (Porteqala şêrîn)</td></tr>
+                            <tr><td><strong>سێو</strong></td><td>خواردن</td><td><strong>sêv</strong></td><td>سێوی سوور (Sêva sor)</td></tr>
+                            <tr><td><strong>شیر</strong></td><td>خواردنەوە</td><td><strong>şîr</strong></td><td>شیری تازە (Şîrê teze)</td></tr>
+                            <tr><td><strong>ماستاو</strong></td><td>خواردنەوە</td><td><strong>dew / do</strong></td><td>ماستاوی سارد (Dewa sar)</td></tr>
+                            <tr><td><strong>چا</strong></td><td>خواردنەوە</td><td><strong>çay</strong></td><td>چای گەرم (Çaya germ)</td></tr>
+                            <tr><td><strong>ئاو</strong></td><td>خواردنەوە</td><td><strong>av</strong></td><td>ئاوی سازگار (Ava zelal)</td></tr>
+                            <tr><td><strong>شەربەت</strong></td><td>خواردنەوە</td><td><strong>ava fêkiyan / şerbet</strong></td><td>شەربەتی پرتەقاڵ (Ava porteqalan)</td></tr>
+                            <tr><td><strong>قاوە</strong></td><td>خواردنەوە</td><td><strong>qehwe</strong></td><td>قاوەی کوردی (Qehweya kurdî)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">پەیام</div>
+
+    <script>
+        const vocabData = [
+            { icon: '🪢', label: 'منداڵان لەسەر جۆلانە', cat: 'وەرزش', ans: 'جۆلانە', km: 'Hêlik' },
+            { icon: '🥪', label: 'لەفەی ساندەویچ', cat: 'خواردن', ans: 'لەفە', km: 'Lefe / Sendewîç' },
+            { icon: '🏓', label: 'یاریی تێنس (پینگ‌پۆنگ)', cat: 'وەرزش', ans: 'تێنس', km: 'Tenîs' },
+            { icon: '🪨', label: 'کایەی هەڵماقۆ بە بەرد', cat: 'وەرزش', ans: 'هەڵماقۆ', km: 'Lîstika kevirikan' },
+            { icon: '🎲', label: 'یاریی دۆمینە', cat: 'وەرزش', ans: 'دۆمینە', km: 'Domîno' },
+            { icon: '🍹', label: 'پەرداخ شەربەتی میوە', cat: 'خواردنەوە', ans: 'شەربەت', km: 'Ava fêkiyan' },
+            { icon: '🏊‍♂️', label: 'مەلەوان لە ناو ئاودا', cat: 'وەرزش', ans: 'مەلە', km: 'Avjenî' },
+            { icon: '⚽', label: 'کوڕێک بە تۆپی پێ', cat: 'وەرزش', ans: 'تۆپی پێ', km: 'Futbol' },
+            { icon: '🫔', label: 'قاپێک دۆڵمەی گەڵامێو', cat: 'خواردن', ans: 'دۆڵمە', km: 'Dolme / Yaprax' },
+            { icon: '🥩', label: 'قاپێک کەبابی برژاو', cat: 'خواردن', ans: 'کەباب', km: 'Kebab' },
+            { icon: '🍊', label: 'پرتەقاڵی لەتکراو', cat: 'خواردن', ans: 'پرتەقاڵ', km: 'Porteqal' },
+            { icon: '☕', label: 'فنجانێک قاوە بە دەنکەوە', cat: 'خواردنەوە', ans: 'قاوە', km: 'Qehwe' },
+            { icon: '🍦', label: 'دۆندرمەی بەستەنی', cat: 'خواردن', ans: 'دۆندرمە', km: 'Qeşot' },
+            { icon: '🥛', label: 'جامی ماستاو (دۆ)', cat: 'خواردنەوە', ans: 'ماستاو', km: 'Dew / Do' },
+            { icon: '🍎', label: 'سەبەتەیەک سێوی سوور', cat: 'خواردن', ans: 'سێو', km: 'Sêv' },
+            { icon: '🥛', label: 'پەرداخێک شیری سپی', cat: 'خواردنەوە', ans: 'شیر', km: 'Şîr' },
+            { icon: '🚰', label: 'پەرداخ و شووشەی ئاو', cat: 'خواردنەوە', ans: 'ئاو', km: 'Av' },
+            { icon: '🫖', label: 'استکان و پیاڵەی چا', cat: 'خواردنەوە', ans: 'چا', km: 'Çay' }
+        ];
+
+        const allWordsList = [
+            'جۆلانە', 'هەڵماقۆ', 'مەلە', 'دۆمینە', 'تۆپی پێ', 'تێنس',
+            'دۆندرمە', 'دۆڵمە', 'لەفە', 'کەباب', 'پرتەقاڵ', 'سێو',
+            'شیر', 'ماستاو', 'چا', 'ئاو', 'شەربەت', 'قاوە'
+        ];
+
+        let userSelections = Array(vocabData.length).fill(null);
+        let currentFilter = 'all';
+
+        function initGrid() {
+            const grid = document.getElementById('matchGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            vocabData.forEach((item, idx) => {
+                const isHidden = (currentFilter !== 'all' && item.cat !== currentFilter);
+                let tagClass = item.cat === 'وەرزش' ? 'tag-sport' : (item.cat === 'خواردن' ? 'tag-food' : 'tag-drink');
+
+                let optionsHtml = '<option value="">وشەیەک هەڵبژێرە...</option>';
+                allWordsList.forEach(w => {
+                    const selAttr = userSelections[idx] === w ? 'selected' : '';
+                    optionsHtml += `<option value="${w}" ${selAttr}>${w}</option>`;
+                });
+
+                grid.innerHTML += `
+                    <div class="match-card" id="card-${idx}" style="${isHidden ? 'display:none;' : ''}">
+                        <div>
+                            <span class="category-tag ${tagClass}">${item.cat}</span>
+                            <div class="icon">${item.icon}</div>
+                            <div style="font-weight:700; font-size:0.95rem;">${item.label}</div>
+                            <div style="font-size:0.85rem; color:var(--primary); font-style:italic;">(${item.km})</div>
+                        </div>
+                        <div style="width:100%;">
+                            <select class="select-box" id="sel-${idx}" onchange="checkWord(${idx}, this.value)">
+                                ${optionsHtml}
+                            </select>
+                            <div class="fb-msg" id="fb-${idx}"></div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterCards(category, btn) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            vocabData.forEach((item, idx) => {
+                const card = document.getElementById('card-' + idx);
+                if (card) {
+                    if (category === 'all' || item.cat === category) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function checkWord(idx, val) {
+            userSelections[idx] = val;
+            const sel = document.getElementById('sel-' + idx);
+            const fb = document.getElementById('fb-' + idx);
+            if (!val) {
+                sel.className = 'select-box';
+                fb.className = 'fb-msg';
+                fb.innerText = '';
+            } else if (val === vocabData[idx].ans) {
+                sel.className = 'select-box correct';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#065f46';
+                fb.innerText = '✅ دروستە! (' + vocabData[idx].km + ')';
+            } else {
+                sel.className = 'select-box wrong';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#991b1b';
+                fb.innerText = '❌ هەڵەیە! دروست: «' + vocabData[idx].ans + '»';
+            }
+            updateScore();
+        }
+
+        function updateScore() {
+            let correctCount = userSelections.filter((ans, i) => ans === vocabData[i].ans).length;
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            if (scoreDisplay) scoreDisplay.innerText = correctCount + ' / ' + vocabData.length;
+        }
+
+        function resetExercise() {
+            userSelections.fill(null);
+            initGrid();
+            updateScore();
+        }
+
+        function switchTab(tabId, clickedBtn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            if (clickedBtn) clickedBtn.classList.add('active');
+            const targetPane = document.getElementById(tabId);
+            if (targetPane) targetPane.classList.add('active');
+        }
+
+        function buildSentence() {
+            const sbj = document.getElementById('sbjSelect').value;
+            const type = document.getElementById('typeSelect').value;
+            const item = document.getElementById('itemSelect').value;
+
+            const conjMap = {
+                'من': { pos: 'دەکەم', neg: 'ناکەم' },
+                'تۆ': { pos: 'دەکەیت', neg: 'ناکەیت' },
+                'ئازاد': { pos: 'دەکات', neg: 'ناکات' },
+                'ئێمە': { pos: 'دەکەین', neg: 'ناکەین' },
+                'ئێوە': { pos: 'دەکەن', neg: 'ناکەن' },
+                'ئەوان': { pos: 'دەکەن', neg: 'ناکەن' }
+            };
+
+            const kmSbjMap = { 'من': 'Ez', 'تۆ': 'Tu', 'ئازاد': 'Azad', 'ئێمە': 'Em', 'ئێوە': 'Hûn', 'ئەوان': 'Ew' };
+            const kmVerbMap = {
+                'Ez': { pos: 'hez dikim', neg: 'hez nakim' },
+                'Tu': { pos: 'hez dikî', neg: 'hez nakî' },
+                'Azad': { pos: 'hez dike', neg: 'hez nake' },
+                'Em': { pos: 'hez dikin', neg: 'hez nakin' },
+                'Hûn': { pos: 'hez dikin', neg: 'hez nakin' },
+                'Ew': { pos: 'hez dikin', neg: 'hez nakin' }
+            };
+
+            const kmItemMap = {
+                'تۆپی پێ': 'futbolê', 'تێنس': 'tenîsê', 'مەلە': 'avjeniyê', 'کەباب': 'kebabê',
+                'دۆڵمە': 'dolmeyê', 'دۆندرمە': 'qeşotê', 'چا': 'çayê', 'ماستاو': 'dewê',
+                'قاوە': 'qehweyê', 'شەربەت': 'ava fêkiyan'
+            };
+
+            const verbS = conjMap[sbj][type];
+            const kmS = kmSbjMap[sbj];
+            const kmV = kmVerbMap[kmS][type];
+            const kmI = kmItemMap[item] || item;
+
+            const resS = `${sbj} حەز لە ${item} ${verbS}.`;
+            const resK = `${kmS} ji ${kmI} ${kmV}.`;
+
+            document.getElementById('resSoranî').innerText = resS;
+            document.getElementById('resKurmanjî').innerText = resK;
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            document.getElementById('themeBtn').innerText = next === 'dark' ? '☀️ دۆخی ڕووناک' : '🌙 دۆخی تاریک';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initGrid();
+            buildSentence();
+        });
+    </script>
+</body>
+</html>

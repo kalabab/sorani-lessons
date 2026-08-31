@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وانەی کوردیی سۆرانی - پەڕەی ۳۵ | کاروان (ناسراو و نەناسراو)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --error: #ef4444;
+            --error-light: #fee2e2;
+            --accent: #f59e0b;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --radius: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #0b0f19;
+            --bg-card: #151d2f;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #243049;
+            --primary-light: #1e293b;
+            --success-light: #064e3b;
+            --error-light: #7f1d1d;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.75; padding-bottom: 70px; }
+
+        header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #0d9488);
+            color: white; padding: 30px 20px; text-align: center; position: relative;
+            box-shadow: var(--shadow); border-bottom: 4px solid #f59e0b;
+        }
+
+        .theme-btn {
+            position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4); color: white; padding: 6px 12px;
+            border-radius: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 700;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px 16px; }
+
+        .score-box {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 14px 20px; margin-bottom: 20px; display: flex; justify-content: space-between;
+            align-items: center; box-shadow: var(--shadow); flex-wrap: wrap; gap: 12px;
+        }
+
+        .score-pill { background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: 1.15rem; padding: 4px 14px; border-radius: 10px; }
+
+        .nav-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 20px; }
+        .tab-btn {
+            background: var(--bg-card); border: 1.5px solid var(--border); color: var(--text-muted);
+            padding: 10px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--primary); border-color: var(--primary); }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow); }
+        .card-title { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 14px; }
+        .desc { background: var(--bg-main); padding: 12px 16px; border-radius: 10px; border-right: 4px solid var(--primary); margin-bottom: 20px; font-size: 0.95rem; color: var(--text-muted); }
+
+        .audio-box {
+            background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(16,185,129,0.06));
+            border: 1.5px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+        }
+
+        .audio-main-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none;
+            padding: 9px 18px; border-radius: 10px; font-weight: 800; font-size: 0.95rem; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+
+        .speak-btn-small {
+            background: var(--bg-card); border: 1.5px solid var(--primary); color: var(--primary);
+            padding: 4px 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; vertical-align: middle;
+        }
+        .speak-btn-small:hover { background: var(--primary); color: white; }
+        .speak-btn-small.playing { background: var(--success); color: white; border-color: var(--success); }
+
+        .text-passage {
+            background: var(--bg-main); border: 1.5px solid var(--border); border-radius: 14px;
+            padding: 22px; font-size: 1.15rem; line-height: 2.3; margin-bottom: 20px;
+        }
+
+        .highlight-indef { background: rgba(245, 158, 11, 0.18); border-bottom: 2.5px solid #f59e0b; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+        .highlight-def { background: rgba(37, 99, 235, 0.18); border-bottom: 2.5px solid #2563eb; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+
+        .qa-row {
+            background: var(--bg-main); border: 1px solid var(--border); border-radius: 12px;
+            padding: 16px; margin-bottom: 14px;
+        }
+        .qa-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        .qa-q { font-weight: 800; font-size: 1.08rem; color: var(--primary); }
+        .qa-input-wrapper { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+        .input-inline {
+            background: var(--bg-card); border: 1.5px solid var(--border); color: var(--text-main);
+            padding: 8px 12px; border-radius: 8px; font-weight: 700; font-size: 1rem; flex: 1; min-width: 220px;
+            outline: none; direction: rtl;
+        }
+        .input-inline:focus { border-color: var(--primary); }
+        .input-inline.correct { border-color: var(--success) !important; background: var(--success-light) !important; color: #065f46 !important; }
+        .input-inline.wrong { border-color: var(--error) !important; background: var(--error-light) !important; color: #991b1b !important; }
+
+        .btn-check-sm {
+            background: var(--primary); color: white; border: none; padding: 7px 16px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.88rem;
+        }
+
+        .fb-msg { font-size: 0.88rem; margin-top: 8px; font-weight: 700; display: none; }
+        .fb-msg.show { display: block; }
+
+        .formula-box {
+            background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(245,158,11,0.06));
+            border: 2px dashed var(--primary); border-radius: 14px; padding: 18px; text-align: center; margin-bottom: 18px;
+        }
+        .formula { font-size: 1.2rem; font-weight: 800; color: var(--primary-dark); margin: 8px 0; }
+
+        .table-wrap { overflow-x: auto; margin-top: 14px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: right; }
+        th { background: var(--bg-main); color: var(--primary); font-weight: 800; }
+
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #1e293b; color: white; padding: 10px 20px; border-radius: 9999px;
+            font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; z-index: 2000; opacity: 0;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <audio id="audio68" preload="auto">
+        <source src="6-8.mp3" type="audio/mpeg">
+        <source src="6-8.ogg" type="audio/ogg">
+    </audio>
+
+    <audio id="audio69" preload="auto">
+        <source src="6-9.mp3" type="audio/mpeg">
+        <source src="6-9.ogg" type="audio/ogg">
+    </audio>
+
+    <header>
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 دۆخی تاریک</button>
+        <div style="font-size: 0.85rem; font-weight: 700; opacity: 0.9; margin-bottom: 4px;">فێرکاریی زمانی کوردیی سۆرانی • پەڕەی ۳۵</div>
+        <h1 style="font-size: 1.8rem; font-weight: 900;">خوێندنەوە و گوێگرتن: «کاروان»</h1>
+        <p style="font-size: 0.95rem; opacity: 0.95;">ڕێزمانی ناوی ناسراو و نەناسراو، پرسیار و وەڵامی کورت بە دەنگی تۆمارکراو</p>
+    </header>
+
+    <div class="container">
+        <div class="score-box">
+            <div>
+                <span style="font-weight: 700; color: var(--text-muted);">نمرەی ڕاهێنانی ۶-۹:</span>
+                <span class="score-pill" id="scoreDisplay">۰ / ۴</span>
+            </div>
+            <button onclick="resetExercise()" style="background:var(--bg-main); border:1px solid var(--border); padding:6px 14px; border-radius:8px; cursor:pointer; font-weight:700;">🔄 دەستپێکردنەوە</button>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('tab1', this)">📖 ۱. دەقی کاروان (٦-٨)</button>
+            <button class="tab-btn" onclick="switchTab('tab2', this)">🎧 ۲. ڕاهێنانی ۶-۹ (پرسیار و وەڵام)</button>
+            <button class="tab-btn" onclick="switchTab('tab3', this)">💡 ۳. ناسراو و نەناسراو</button>
+            <button class="tab-btn" onclick="switchTab('tab4', this)">✍️ ۴. ناساندنی خۆت</button>
+            <button class="tab-btn" onclick="switchTab('tab5', this)">📚 ۵. فەرهەنگۆک (کورمانجی)</button>
+        </div>
+
+        <!-- TAB 1: Reading 6-8 -->
+        <div id="tab1" class="tab-pane active">
+            <div class="card">
+                <div class="card-title">📖 ڕاهێنانی ٦-٨: ئەم پارچە نووسینە بخوێنەوە و گوێ بگرە</div>
+                <div class="desc"><strong>ڕێنمایی:</strong> دەقی «کاروان» بخوێنەوە. بە کلیک لەسەر دکمه‌کانی «🔊 گوێگرتن» دەتوانیت گوێ لە دەنگی ڕاستەقینەی هەر ڕستەیەک بگریت.</div>
+
+                <div class="audio-box">
+                    <div>
+                        <button class="audio-main-btn" onclick="playAudioFull('audio68')">▶️ پەخشی تەواوی دەقی کاروان (٦-٨)</button>
+                        <span style="font-size:0.85rem; color:var(--text-muted); margin-right:10px;">(خوێندنەوەی کاروان ئازاد)</span>
+                    </div>
+                </div>
+
+                <div class="text-passage">
+                    <h3 style="color:var(--primary); font-weight:800; text-align:center; margin-bottom:16px;">کاروان</h3>
+                    <p>
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 3.0, 5.5, this)">🔊 گوێگرتن</button>
+                        سڵاو، من ناوم کاروان ئازادە. 
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Silav, navê min Karwan Azad e.)</span>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 5.5, 9.0, this)">🔊 گوێگرتن</button>
+                        من خەڵکی دهۆکم بەڵام لە ئێستادا لە هەولێر دەژیم.
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Ez xelkê Duhokê me lê niha li Hewlêrê dijîm.)</span>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 9.0, 13.0, this)">🔊 گوێگرتن</button>
+                        <span class="highlight-indef">خانوویەکی بچکۆلانە</span>م لە گەڕەکی قەڵات هەیە.
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Li taxa Qelayê xaniyê min ê biçûk heye.)</span>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 13.0, 16.0, this)">🔊 گوێگرتن</button>
+                        <span class="highlight-def">خانووەکە</span>م بچووکە بەڵام دڵگیرە.
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Xaniyê min biçûk e lê dilsaz û xweş e.)</span>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 16.0, 20.0, this)">🔊 گوێگرتن</button>
+                        وێنەگر (کامێرامان) و خوێندکاری زانکۆی سەلاحەدینیشم.
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Wênekêş û xwendekarê Zanîngeha Selahedînê me.)</span>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 20.0, 23.0, this)">🔊 گوێگرتن</button>
+                        بۆ <span class="highlight-indef">تەلەڤزیۆنێک</span>ی ناوخۆ وێنە و ڤیدیۆ دەگرم.
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Ji bo televîzyoneke herêmî wêne û vîdyoyan dikişînim.)</span>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 23.0, 26.5, this)">🔊 گوێگرتن</button>
+                        زمانی کوردی و ئینگلیزی بە باشی دەزانم.
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Zimanê kurdî û îngilîzî baş dizanim.)</span>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 26.5, 29.5, this)">🔊 گوێگرتن</button>
+                        هەروەها شارەزاییم هەیە لە زمانی فارسی و عەرەبی.
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Her wiha di zimanê farsî û erebî de jî şareza me.)</span>
+                    </p>
+                    <p style="margin-top:8px;">
+                        <button class="speak-btn-small" onclick="playAudioSegment('audio68', 29.5, 33.0, this)">🔊 گوێگرتن</button>
+                        من دڵخۆشم کە لێرەم.
+                        <span style="color:var(--text-muted); font-size:0.85rem; font-style:italic;">(Ez dilxweş im ku li vir im.)</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Exercise 6-9 -->
+        <div id="tab2" class="tab-pane">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">🎧 ڕاهێنانی ٦-٩: گوێ بگرە و ڕستەکان تەواو بکە</div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">کۆی خاڵەکان: ۴ نمرە</span>
+                </div>
+                <div class="desc"><strong>ڕێنمایی:</strong> گوێ لە پرسیار و وەڵامەکانی دەنگیی ٦-٩ بگرە و وەڵامە کورتەکان تەواو بکە.</div>
+
+                <div class="audio-box">
+                    <div>
+                        <button class="audio-main-btn" onclick="playAudioFull('audio69')">▶️ پەخشی تەواوی دەنگی ٦-٩</button>
+                        <span style="font-size:0.85rem; color:var(--text-muted); margin-right:10px;">(تەواوکردنی پرسیار و وەڵام)</span>
+                    </div>
+                </div>
+
+                <div id="qaContainer">
+                    <div class="qa-row">
+                        <div class="qa-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio69', 3.5, 9.0, this)">🔊 گوێگرتن</button>
+                                <span class="qa-q">۱. پرسیار: ئایا تۆ خەڵکی کەرکووکیت؟ (خەڵکی سلێمانیت؟)</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Gelo tu xelkê Kerkûkê yî?</span>
+                        </div>
+                        <div class="qa-input-wrapper">
+                            <span>وەڵام: نەخێر، من</span>
+                            <input type="text" class="input-inline" id="in-qa-0" placeholder="تەواوی بکە... (خەڵکی کەرکووک نیم)">
+                            <button class="btn-check-sm" onclick="checkQA(0)">پشکنین</button>
+                            <button onclick="revealQA(0)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-qa-0"></div>
+                    </div>
+
+                    <div class="qa-row">
+                        <div class="qa-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio69', 9.0, 15.0, this)">🔊 گوێگرتن</button>
+                                <span class="qa-q">۲. پرسیار: ئایا تۆ لە هەولێر دەژیت؟</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Gelo tu li Hewlêrê dijî?</span>
+                        </div>
+                        <div class="qa-input-wrapper">
+                            <span>وەڵام: بەڵێ، من</span>
+                            <input type="text" class="input-inline" id="in-qa-1" placeholder="تەواوی بکە... (لە هەولێر دەژیم)">
+                            <button class="btn-check-sm" onclick="checkQA(1)">پشکنین</button>
+                            <button onclick="revealQA(1)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-qa-1"></div>
+                    </div>
+
+                    <div class="qa-row">
+                        <div class="qa-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio69', 15.0, 19.5, this)">🔊 گوێگرتن</button>
+                                <span class="qa-q">۳. پرسیار: ئایا تۆ لە شوقە دەژیت؟</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Gelo tu di şûqeyê de dijî?</span>
+                        </div>
+                        <div class="qa-input-wrapper">
+                            <span>وەڵام: نەخێر، من لە شوقە</span>
+                            <input type="text" class="input-inline" id="in-qa-2" placeholder="تەواوی بکە... (ناژیم)">
+                            <button class="btn-check-sm" onclick="checkQA(2)">پشکنین</button>
+                            <button onclick="revealQA(2)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-qa-2"></div>
+                    </div>
+
+                    <div class="qa-row">
+                        <div class="qa-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio69', 20.0, 25.5, this)">🔊 گوێگرتن</button>
+                                <span class="qa-q">۴. پرسیار: ئایا خانووەکەت خۆشە؟</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Gelo xaniyê te xweş e?</span>
+                        </div>
+                        <div class="qa-input-wrapper">
+                            <span>وەڵام: بەڵێ، خانووەکەم</span>
+                            <input type="text" class="input-inline" id="in-qa-3" placeholder="تەواوی بکە... (دڵگیرە / بچووکە بەڵام دڵگیرە)">
+                            <button class="btn-check-sm" onclick="checkQA(3)">پشکنین</button>
+                            <button onclick="revealQA(3)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-qa-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Grammar -->
+        <div id="tab3" class="tab-pane">
+            <div class="card">
+                <div class="card-title">💡 ڕێزمانی پەڕەی ۳۵: ناوی ناسراو و نەناسراو</div>
+
+                <div class="formula-box">
+                    <div style="font-weight:700; color:var(--text-muted);">۱. ناوی نەناسراو (Navê Nediyarkirî / Indefinite):</div>
+                    <div class="formula" style="color:#d97706;">ناو + (ـێک / ـیەک) ➔ خانوویەک / کوڕێک / کتێبێک</div>
+                    <div style="font-size:0.88rem; color:var(--text-muted);">Xaniyەک (xaniyek), Pirtûkەک (pirtûkek)</div>
+                </div>
+
+                <div class="formula-box" style="border-color:#2563eb;">
+                    <div style="font-weight:700; color:var(--text-muted);">۲. ناوی ناسراو (Navê Diyarkirî / Definite):</div>
+                    <div class="formula" style="color:#1d4ed8;">ناو + (ـەکە / ـکە) ➔ خانووەکە / کوڕەکە / کتێبەکە</div>
+                    <div style="font-size:0.88rem; color:var(--text-muted);">Xaniyەکە (xaniyê diyarkirî), Pirtûkەکە</div>
+                </div>
+
+                <div class="desc">
+                    <h4 style="color:var(--primary); margin-bottom:6px;">💡 یاسای سەرەکی لە دەقی کارواندا:</h4>
+                    کاتێک ناوێکی گشتی بۆ جاری یەکەم بەکار دێت، بە <strong>(ـێک / ـیەک)</strong> دەبێتە نەناسراو: <br>
+                    ➔ <em>«خانوویەکی بچکۆلانەم لە گەڕەکی قەڵات هەیە.»</em> (Cara yekem: nediyarkirî)<br><br>
+                    کاتێک هەمان ناو لە جارێک زیاتر دووبارە دەبێتەوە، ناوە دووبارەکان بە <strong>(ـەکە / ـکە)</strong> دەبن بە ناسراو:<br>
+                    ➔ <em>«خانووەکەم بچووکە بەڵام دڵگیرە.»</em> (Cara duyem: diyarkirî).
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: Self Introduction Builder -->
+        <div id="tab4" class="tab-pane">
+            <div class="card">
+                <div class="card-title">✍️ کارگەی نووسین: خۆت بناسێنە (خۆناساندن بە زمانی سۆرانی)</div>
+                <div class="desc"><strong>ڕێنمایی:</strong> هاوشێوەی دەقی کاروان، زانیارییەکانت پڕبکەرەوە تا دەقی خۆناساندنەکەت بە زمانی سۆرانی و کورمانجی ئامادە ببێت.</div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:16px;">
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">ناوت (Navê te):</label>
+                        <input type="text" id="bioName" class="input-inline" style="width:100%;" placeholder="بۆ نموونە: دیار" oninput="buildBio()">
+                    </div>
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">خەڵکی کوێیت؟ (Xelkê kîjan bajarî yî?):</label>
+                        <input type="text" id="bioOrigin" class="input-inline" style="width:100%;" placeholder="بۆ نموونە: دهۆک / سلێمانی" oninput="buildBio()">
+                    </div>
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">لە کوێ دەژیت؟ (Li ku dijî?):</label>
+                        <input type="text" id="bioLive" class="input-inline" style="width:100%;" placeholder="بۆ نموونە: هەولێر" oninput="buildBio()">
+                    </div>
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">پیشە یان خوێندن (Pîşe):</label>
+                        <input type="text" id="bioJob" class="input-inline" style="width:100%;" placeholder="بۆ نموونە: مامۆستا / خوێندکار" oninput="buildBio()">
+                    </div>
+                </div>
+
+                <div style="background:var(--bg-main); border:1.5px solid var(--primary); border-radius:12px; padding:18px;">
+                    <div id="bioSoranî" style="font-size:1.18rem; font-weight:800; color:var(--primary); line-height:2.2; margin-bottom:8px;">
+                        سڵاو، من ناوم دیارە. من خەڵکی دهۆکم بەڵام لە ئێستادا لە هەولێر دەژیم. من خوێندکارم و دڵخۆشم کە لێرەم.
+                    </div>
+                    <div id="bioKurmanjî" style="font-size:0.95rem; color:var(--text-muted); font-style:italic;">
+                        Silav, navê min Dyar e. Ez xelkê Duhokê me lê niha li Hewlêrê dijîm. Ez xwendekar im û dilxweş im ku li vir im.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: Vocabulary -->
+        <div id="tab5" class="tab-pane">
+            <div class="card">
+                <div class="card-title">📚 فەرهەنگۆکی وشەکانی پەڕەی ۳۵ (سۆرانی - کورمانجی)</div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>وشەی سۆرانی</th><th>واتا بە کوردیی کورمانجی</th><th>ڕۆڵی ڕێزمانی و نموونە</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>بچکۆلانە</strong></td><td><strong>biçûk / hûrik</strong></td><td>ئاوەڵناو (خانوویەکی بچکۆلانە / Xaniyê biçûk)</td></tr>
+                            <tr><td><strong>دڵگیر</strong></td><td><strong>dilsaz / xweş / balkêş</strong></td><td>ئاوەڵناو (خانووەکەم دڵگیرە / Xaniyê min xweş e)</td></tr>
+                            <tr><td><strong>گەڕەک</strong></td><td><strong>tax / mehle</strong></td><td>ناو (گەڕەکی قەڵات / Taxa Qelayê)</td></tr>
+                            <tr><td><strong>وێنەگر</strong></td><td><strong>wênekêş / kamêraman</strong></td><td>ناو و پیشە (وێنەگر و کامێرامان)</td></tr>
+                            <tr><td><strong>ناوخۆ</strong></td><td><strong>navxweyî / herêmî</strong></td><td>ئاوەڵناو (تەلەڤزیۆنی ناوخۆ / Televîzyona herêmî)</td></tr>
+                            <tr><td><strong>شارەزایی</strong></td><td><strong>şarezayî / zanyarî / pisporî</strong></td><td>ناو (شارەزاییم لە زمان هەیە / Di ziman de şareza me)</td></tr>
+                            <tr><td><strong>شوقە</strong></td><td><strong>şûqe / apartman</strong></td><td>ناو (لە شوقە ناژیم / Di şûqeyê de najîm)</td></tr>
+                            <tr><td><strong>ناسراو</strong></td><td><strong>diyarkirî (definite)</strong></td><td>ڕێزمان (خانووەکە / Xaniyê diyarkirî)</td></tr>
+                            <tr><td><strong>نەناسراو</strong></td><td><strong>nediyarkirî (indefinite)</strong></td><td>ڕێزمان (خانوویەک / Xaniyek)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">پەیام</div>
+
+    <script>
+        const qaAnswers = [
+            ['خەڵکی کەرکووک نیم', 'خەڵکی کەرکوک نیم', 'خەڵکی سلێمانی نیم'],
+            ['لە هەولێر دەژیم'],
+            ['ناژیم'],
+            ['دڵگیرە', 'بچووکە بەڵام دڵگیرە', 'خۆشە']
+        ];
+        const qaKurmanji = [
+            'Ez ne xelkê Kerkûkê me (ne xelkê Silêmaniyê me).',
+            'Ez li Hewlêrê dijîm.',
+            'Ez di şûqeyê de najîm.',
+            'Xaniyê min dilsaz û xweş e.'
+        ];
+        let userQA = [false, false, false, false];
+
+        function cleanText(t) {
+            return t.replace(/[؟?.,،!]/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        function checkQA(idx) {
+            const input = document.getElementById('in-qa-' + idx);
+            const fb = document.getElementById('fb-qa-' + idx);
+            const val = input.value.trim();
+
+            const isMatch = qaAnswers[idx].some(ans => cleanText(val) === cleanText(ans) || cleanText(val).includes(cleanText(ans)));
+            if (isMatch) {
+                input.className = 'input-inline correct';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#065f46';
+                fb.innerHTML = '✅ <strong>دروستە!</strong> (' + qaKurmanji[idx] + ')';
+                userQA[idx] = true;
+            } else {
+                input.className = 'input-inline wrong';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#991b1b';
+                fb.innerHTML = '❌ <strong>هەڵەیە!</strong> دروست: «' + qaAnswers[idx][0] + '»';
+                userQA[idx] = false;
+            }
+            updateScore();
+        }
+
+        function revealQA(idx) {
+            document.getElementById('in-qa-' + idx).value = qaAnswers[idx][0];
+            checkQA(idx);
+        }
+
+        function updateScore() {
+            const score = userQA.filter(Boolean).length;
+            document.getElementById('scoreDisplay').innerText = score + ' / ' + userQA.length;
+        }
+
+        function resetExercise() {
+            userQA = [false, false, false, false];
+            for (let i = 0; i < 4; i++) {
+                const inEl = document.getElementById('in-qa-' + i);
+                if (inEl) { inEl.value = ''; inEl.className = 'input-inline'; }
+                const fb = document.getElementById('fb-qa-' + i);
+                if (fb) { fb.className = 'fb-msg'; fb.innerText = ''; }
+            }
+            updateScore();
+            showToast('ڕاهێنانەکان لەسەرەتاوە دەستیان پێکردەوە!');
+        }
+
+        function switchTab(tabId, clickedBtn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            if (clickedBtn) clickedBtn.classList.add('active');
+            const targetPane = document.getElementById(tabId);
+            if (targetPane) targetPane.classList.add('active');
+        }
+
+        let activeTimeout = null;
+        function playAudioSegment(audioId, startSec, endSec, btn) {
+            const audio = document.getElementById(audioId);
+            if (!audio) return;
+
+            document.querySelectorAll('audio').forEach(a => { if (a !== audio) a.pause(); });
+            if (activeTimeout) { clearTimeout(activeTimeout); activeTimeout = null; }
+
+            document.querySelectorAll('.speak-btn-small').forEach(b => b.classList.remove('playing'));
+
+            audio.currentTime = startSec;
+            audio.play().then(() => {
+                if (btn) btn.classList.add('playing');
+                showToast('🔊 دەنگ پەخش دەکرێت...');
+                const duration = (endSec - startSec) * 1000;
+                activeTimeout = setTimeout(() => {
+                    audio.pause();
+                    if (btn) btn.classList.remove('playing');
+                }, duration);
+            }).catch(e => {
+                showToast('فایلی دەنگی لە تەنیشت ئەم پەڕەیە نەدۆزرایەوە.');
+            });
+        }
+
+        function playAudioFull(audioId) {
+            const audio = document.getElementById(audioId);
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().then(() => {
+                    showToast('🔊 پەخشی تەواوی فایلی دەنگی...');
+                }).catch(() => {
+                    showToast('فایلی دەنگی نەدۆزرایەوە.');
+                });
+            }
+        }
+
+        function buildBio() {
+            const name = document.getElementById('bioName').value.trim() || 'دیار';
+            const origin = document.getElementById('bioOrigin').value.trim() || 'دهۆک';
+            const live = document.getElementById('bioLive').value.trim() || 'هەولێر';
+            const job = document.getElementById('bioJob').value.trim() || 'خوێندکار';
+
+            const s = `سڵاو، من ناوم ${name}ە. من خەڵکی ${origin}م بەڵام لە ئێستادا لە ${live} دەژیم. من ${job}م و دڵخۆشم کە لێرەم.`;
+            const km = `Silav, navê min ${name} e. Ez xelkê ${origin}ê me lê niha li ${live}ê dijîm. Ez ${job} im û dilxweş im ku li vir im.`;
+
+            document.getElementById('bioSoranî').innerText = s;
+            document.getElementById('bioKurmanjî').innerText = km;
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            document.getElementById('themeBtn').innerText = next === 'dark' ? '☀️ دۆخی ڕووناک' : '🌙 دۆخی تاریک';
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.innerText = msg;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            }
+        }
+    </script>
+</body>
+</html>

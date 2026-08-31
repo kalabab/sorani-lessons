@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وانەی کوردیی سۆرانی - پەڕەی ۳۲ | ڕستەی ڕانەبردووی سادە</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --error: #ef4444;
+            --error-light: #fee2e2;
+            --accent: #8b5cf6;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --radius: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #0b0f19;
+            --bg-card: #151d2f;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #243049;
+            --primary-light: #1e293b;
+            --success-light: #064e3b;
+            --error-light: #7f1d1d;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.75; padding-bottom: 70px; }
+
+        header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #0d9488);
+            color: white; padding: 30px 20px; text-align: center; position: relative;
+            box-shadow: var(--shadow); border-bottom: 4px solid #f59e0b;
+        }
+
+        .theme-btn {
+            position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4); color: white; padding: 6px 12px;
+            border-radius: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 700;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px 16px; }
+
+        .score-box {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 14px 20px; margin-bottom: 20px; display: flex; justify-content: space-between;
+            align-items: center; box-shadow: var(--shadow); flex-wrap: wrap; gap: 12px;
+        }
+
+        .score-pill { background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: 1.15rem; padding: 4px 14px; border-radius: 10px; }
+
+        .nav-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 20px; }
+        .tab-btn {
+            background: var(--bg-card); border: 1.5px solid var(--border); color: var(--text-muted);
+            padding: 10px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; white-space: nowrap;
+        }
+        .tab-btn:hover { color: var(--primary); border-color: var(--primary); }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow); }
+        .card-title { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 14px; }
+        .desc { background: var(--bg-main); padding: 12px 16px; border-radius: 10px; border-right: 4px solid var(--primary); margin-bottom: 20px; font-size: 0.95rem; color: var(--text-muted); }
+
+        .match-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 20px; }
+        .match-card { background: var(--bg-main); border: 1.5px solid var(--border); border-radius: 14px; padding: 16px; text-align: center; }
+        .match-card .icon { font-size: 3rem; margin-bottom: 6px; }
+
+        .select-box {
+            width: 100%; background: var(--bg-card); border: 1.5px solid var(--border);
+            color: var(--text-main); padding: 8px 12px; border-radius: 8px; font-weight: 700;
+            margin-top: 10px; outline: none; text-align: center; font-size: 0.95rem;
+        }
+        .select-box.correct { background: var(--success-light) !important; border-color: var(--success) !important; color: #065f46 !important; }
+        .select-box.wrong { background: var(--error-light) !important; border-color: var(--error) !important; color: #991b1b !important; }
+
+        .formula-box {
+            background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(16,185,129,0.06));
+            border: 2px dashed var(--primary); border-radius: 14px; padding: 20px; text-align: center; margin-bottom: 20px;
+        }
+        .formula { font-size: 1.25rem; font-weight: 800; color: var(--primary-dark); margin: 10px 0; }
+
+        .table-wrap { overflow-x: auto; margin-top: 14px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: right; }
+        th { background: var(--bg-main); color: var(--primary); font-weight: 800; }
+
+        .conj-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 16px; }
+        @media(max-width: 700px) { .conj-layout { grid-template-columns: 1fr; } }
+        .verb-btn { width: 100%; background: var(--bg-main); border: 1px solid var(--border); padding: 9px 14px; border-radius: 8px; font-weight: 700; text-align: right; margin-bottom: 6px; cursor: pointer; }
+        .verb-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .conj-item { background: var(--bg-card); border: 1px solid var(--border); padding: 8px 14px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; font-weight: 700; }
+        .fb-msg { font-size: 0.85rem; margin-top: 6px; font-weight: 700; display: none; }
+        .fb-msg.show { display: block; }
+
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #1e293b; color: white; padding: 10px 20px; border-radius: 9999px;
+            font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; z-index: 2000; opacity: 0;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 دۆخی تاریک</button>
+        <div style="font-size: 0.85rem; font-weight: 700; opacity: 0.9; margin-bottom: 4px;">فێرکاریی زمانی کوردیی سۆرانی • پەڕەی ۳۲</div>
+        <h1 style="font-size: 1.8rem; font-weight: 900;">ڕستەی ڕانەبردووی سادە (کردارە نەشازەکان)</h1>
+        <p style="font-size: 0.95rem; opacity: 0.95;">چاوگەکان و وێنەکان، تاقیگەی گەردانکردن لە کاتی ئێستادا، و ڕێزمانی ڕەگ</p>
+    </header>
+
+    <div class="container">
+        <div class="score-box">
+            <div>
+                <span style="font-weight: 700; color: var(--text-muted);">نمرەی تاقیکردنەوە:</span>
+                <span class="score-pill" id="scoreDisplay">۰ / ۹</span>
+            </div>
+            <button onclick="resetExercise()" style="background:var(--bg-main); border:1px solid var(--border); padding:6px 14px; border-radius:8px; cursor:pointer; font-weight:700;">🔄 دەستپێکردنەوە</button>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" data-tab="tab1" onclick="switchTab('tab1', this)">🖼️ ۱. ڕاهێنانی ۶-۱ (چاوگ و وێنە)</button>
+            <button class="tab-btn" data-tab="tab2" onclick="switchTab('tab2', this)">🔬 ۲. تاقیگەی گەردانکردن</button>
+            <button class="tab-btn" data-tab="tab3" onclick="switchTab('tab3', this)">📖 ۳. ڕێزمانی دروستکردنی ڕەگ</button>
+            <button class="tab-btn" data-tab="tab4" onclick="switchTab('tab4', this)">✍️ ۴. دروستکردنی ڕستە</button>
+            <button class="tab-btn" data-tab="tab5" onclick="switchTab('tab5', this)">📚 ۵. فەرهەنگۆک (کورمانجی)</button>
+        </div>
+
+        <!-- TAB 1: Exercise 6-1 -->
+        <div id="tab1" class="tab-pane active">
+            <div class="card">
+                <div class="card-title">🖼️ ڕاهێنانی ٦-١: چاوگی گونجاو لە ژێر وێنەی گونجاودا بنووسە</div>
+                <div class="desc"><strong>ڕێنمایی:</strong> بۆ هەر وێنەیەک، چاوگی گونجاو لە منووەکە هەڵبژێرە.</div>
+
+                <div class="match-grid" id="grid"></div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Conjugation Lab -->
+        <div id="tab2" class="tab-pane">
+            <div class="card">
+                <div class="card-title">🔬 تاقیگەی گەردانکردنی کردار لە کاتی ڕانەبردوودا (Dema Niha)</div>
+                <div class="desc"><strong>ڕێنمایی:</strong> لە لیستی لای ڕاست کردارێک هەڵبژێرە تا گەردانکردنی لەگەڵ جێناوەکان ببینیت.</div>
+
+                <div class="conj-layout">
+                    <div id="verbList"></div>
+                    <div id="conjBox" style="background:var(--bg-main); border:1px solid var(--border); border-radius:12px; padding:16px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Grammar -->
+        <div id="tab3" class="tab-pane">
+            <div class="card">
+                <div class="card-title">📖 ڕێزمانی دروستکردنی ڕەگی کردار و کاتی ڕانەبردوو</div>
+
+                <div class="formula-box">
+                    <div style="font-weight:700; color:var(--text-muted);">فۆرموولی کاتی ڕانەبردووی سادە (Dema niha ya sade):</div>
+                    <div class="formula">دە + ڕەگی ڕانەبردوو + جێناوی لکاو (دەچم / دەکڕم)</div>
+                </div>
+
+                <div class="desc">
+                    <h4 style="color:var(--primary); margin-bottom:6px;">💡 یاسای دۆزینەوەی ڕەگ:</h4>
+                    (ن)ی چاوگ و نیشانەی ڕابردوو (ی، ت، و، ا، د) لادەبرێن و ڕەگی کردار دەمێنێتەوە.<br>
+                    <strong>نموونە:</strong> چوون ➔ چ (دە + چ + م = دەچم / Ez diçim).
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>جێناوی سەربەخۆ</th><th>جێناوی لکاو</th><th>نموونە (چوون)</th><th>هاوتای کورمانجی</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>من</strong></td><td>ـم</td><td><strong>دەچم</strong></td><td>Ez diçim</td></tr>
+                            <tr><td><strong>تۆ</strong></td><td>ـیت / ـی</td><td><strong>دەچیت</strong></td><td>Tu diçî</td></tr>
+                            <tr><td><strong>ئەو</strong></td><td>ـێت / ـێ</td><td><strong>دەچێت</strong></td><td>Ew diçe</td></tr>
+                            <tr><td><strong>ئێمە</strong></td><td>ـین</td><td><strong>دەچین</strong></td><td>Em diçin</td></tr>
+                            <tr><td><strong>ئێوە</strong></td><td>ـن</td><td><strong>دەچن</strong></td><td>Hûn diçin</td></tr>
+                            <tr><td><strong>ئەوان</strong></td><td>ـن</td><td><strong>دەچن</strong></td><td>Ew diçin</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: Sentence Builder -->
+        <div id="tab4" class="tab-pane">
+            <div class="card">
+                <div class="card-title">✍️ ڕاهێنانی دروستکردنی ڕستە بە کاتی ئێستا</div>
+                <div class="desc"><strong>ڕێنمایی:</strong> بە هەڵبژاردنی بەشەکان، ڕستەی سۆرانی و هاوتای کورمانجی دروست بکە.</div>
+
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:12px; margin-bottom:16px;">
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">بکەر (فاعل):</label>
+                        <select id="sbj" class="select-box" style="margin-top:4px;" onchange="updateSentence()">
+                            <option value="من">من (Ez)</option>
+                            <option value="تۆ">تۆ (Tu)</option>
+                            <option value="ئازاد">ئازاد (Azad)</option>
+                            <option value="ئێمە">ئێمە (Em)</option>
+                            <option value="ئێوە">ئێوە (Hûn)</option>
+                            <option value="ئەوان">ئەوان (Ew)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">کردار (فعل):</label>
+                        <select id="vrb" class="select-box" style="margin-top:4px;" onchange="updateSentence()">
+                            <option value="کڕین">کڕین (Kirîn)</option>
+                            <option value="فرۆشتن">فرۆشتن (Firotin)</option>
+                            <option value="چوون">چوون (Çûn)</option>
+                            <option value="هێنان">هێنان (Anîn)</option>
+                            <option value="بڕین">بڕین (Birîn)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-weight:700; font-size:0.9rem;">تەواوکەر (مفعول):</label>
+                        <select id="obj" class="select-box" style="margin-top:4px;" onchange="updateSentence()">
+                            <option value="کتێب">کتێب (Pirtûk)</option>
+                            <option value="سێو">سێو (Sêv)</option>
+                            <option value="بۆ زانکۆ">بۆ زانکۆ (Bo zanîngehê)</option>
+                            <option value="کاغەز">کاغەز (Kaxez)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="background:var(--bg-main); border:1.5px solid var(--primary); border-radius:12px; padding:18px; text-align:center;">
+                    <div id="resSoranî" style="font-size:1.3rem; font-weight:800; color:var(--primary); margin-bottom:6px;">من کتێب دەکڕم.</div>
+                    <div id="resKurmanjî" style="font-size:1rem; color:var(--text-muted); font-style:italic;">Ez pirtûkê dikirim.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: Vocabulary -->
+        <div id="tab5" class="tab-pane">
+            <div class="card">
+                <div class="card-title">📚 فەرهەنگۆکی کردارەکانی پەڕەی ۳۲ (سۆرانی - کورمانجی)</div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>چاوگ (Soranî)</th><th>ڕەگ (Reh)</th><th>واتا بە کوردیی کورمانجی</th><th>نموونە بە کاتی ئێستا</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>کڕین</strong></td><td>کڕـ</td><td><strong>kirîn</strong></td><td>من سێو <strong>دەکڕم</strong> (Ez sêvan dikirim)</td></tr>
+                            <tr><td><strong>فرۆشتن</strong></td><td>فرۆشـ</td><td><strong>firotin</strong></td><td>ئەو نان <strong>دەفرۆشێت</strong> (Ew nan difiroşe)</td></tr>
+                            <tr><td><strong>چوون</strong></td><td>چـ</td><td><strong>çûn</strong></td><td>ئێمە بۆ زانکۆ <strong>دەچین</strong> (Em diçin zanîngehê)</td></tr>
+                            <tr><td><strong>هێنان</strong></td><td>هێنـ</td><td><strong>anîn / hênan</strong></td><td>تۆ کتێبەکە <strong>دەهێنیت</strong> (Tu pirtûkê tînî)</td></tr>
+                            <tr><td><strong>کێشان</strong></td><td>کێشـ</td><td><strong>kişandin</strong></td><td>ئەوان عەرەبانەکە <strong>دەکێشن</strong> (Ew erebeyê dikişînin)</td></tr>
+                            <tr><td><strong>بڕین</strong></td><td>بڕـ</td><td><strong>birîn / jêkirin</strong></td><td>من کاغەزەکە <strong>دەبڕم</strong> (Ez kaxezê dibirim)</td></tr>
+                            <tr><td><strong>گرتن</strong></td><td>گرـ</td><td><strong>girtin</strong></td><td>ئەو تۆپەکە <strong>دەگرێت</strong> (Ew gogê digire)</td></tr>
+                            <tr><td><strong>زانین</strong></td><td>زانـ</td><td><strong>zanîn</strong></td><td>ئێمە وەڵامەکە <strong>دەزانین</strong> (Em bersivê dizanin)</td></tr>
+                            <tr><td><strong>فڕین</strong></td><td>فڕـ</td><td><strong>firîn</strong></td><td>باڵندەکە <strong>دەفڕێت</strong> (Balinde difire)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">پەیام</div>
+
+    <script>
+        const cardsData = [
+            { icon: '✂️', label: 'بڕینی شتێک بە مەقەست', km: 'Birîn / Jêkirin', ans: 'بڕین' },
+            { icon: '🛒', label: 'ڕاکێشانی عەرەبانە', km: 'Kişandin / Rakêşan', ans: 'کێشان' },
+            { icon: '🛍️', label: 'کڕینی کەلوپەل', km: 'Kirîn', ans: 'کڕین' },
+            { icon: '🏪', label: 'فرۆشتنی کەلوپەل', km: 'Firotin', ans: 'فرۆشتن' },
+            { icon: '📦', label: 'هێنانی بار و کەلوپەل', km: 'Anîn / Hênan', ans: 'هێنان' },
+            { icon: '🤲', label: 'گرتنی شتێک بە دەست', km: 'Girtin', ans: 'گرتن' },
+            { icon: '💡', label: 'زانین و تێگەیشتن', km: 'Zanîn', ans: 'زانین' },
+            { icon: '🚶', label: 'چوون بۆ شوێنێک', km: 'Çûn', ans: 'چوون' },
+            { icon: '🦅', label: 'فڕینی باڵندە لە ئاسمان', km: 'Firîn', ans: 'فڕین' }
+        ];
+
+        const verbsList = ['فرۆشتن', 'کڕین', 'هێنان', 'کێشان', 'بڕین', 'گرتن', 'زانین', 'چوون', 'فڕین'];
+        const verbDetails = {
+            'چوون': { r: 'چ', km: 'çûn', forms: ['دەچم (Ez diçim)', 'دەچیت (Tu diçî)', 'دەچێت (Ew diçe)', 'دەچین (Em diçin)', 'دەچن (Hûn diçin)', 'دەچن (Ew diçin)'] },
+            'کڕین': { r: 'کڕ', km: 'kirîn', forms: ['دەکڕم (Ez dikirim)', 'دەکڕیت (Tu dikirî)', 'دەکڕێت (Ew dikire)', 'دەکڕین (Em dikirin)', 'دەکڕن (Hûn dikirin)', 'دەکڕن (Ew dikirin)'] },
+            'فرۆشتن': { r: 'فرۆش', km: 'firotin', forms: ['دەفرۆشم (Ez difiroşim)', 'دەفرۆشیت (Tu difiroşî)', 'دەفرۆشێت (Ew difiroşe)', 'دەفرۆشین (Em difiroşin)', 'دەفرۆشن (Hûn difiroşin)', 'دەفرۆشن (Ew difiroşin)'] },
+            'هێنان': { r: 'هێن', km: 'anîn', forms: ['دەهێنم (Ez tînim)', 'دەهێنیت (Tu tînî)', 'دەهێنێت (Ew tîne)', 'دەهێنین (Em tînin)', 'دەهێنن (Hûn tînin)', 'دەهێنن (Ew tînin)'] },
+            'کێشان': { r: 'کێش', km: 'kişandin', forms: ['دەکێشم (Ez dikişînim)', 'دەکێشیت (Tu dikişînî)', 'دەکێشێت (Ew dikişîne)', 'دەکێشین (Em dikişînin)', 'دەکێشن (Hûn dikişînin)', 'دەکێشن (Ew dikişînin)'] },
+            'بڕین': { r: 'بڕ', km: 'birîn', forms: ['دەبڕم (Ez dibirim)', 'دەبڕیت (Tu dibirî)', 'دەبڕێت (Ew dibire)', 'دەبڕین (Em dibirin)', 'دەبڕن (Hûn dibirin)', 'دەبڕن (Ew dibirin)'] },
+            'گرتن': { r: 'گر', km: 'girtin', forms: ['دەگرم (Ez digirim)', 'دەگریت (Tu digirî)', 'دەگرێت (Ew digire)', 'دەگرین (Em digirin)', 'دەگرن (Hûn digirin)', 'دەگرن (Ew digirin)'] },
+            'زانین': { r: 'زان', km: 'zanîn', forms: ['دەزانم (Ez dizanim)', 'دەزانیت (Tu dizanî)', 'دەزانێت (Ew dizane)', 'دەزانین (Em dizanin)', 'دەزانن (Hûn dizanin)', 'دەزانن (Ew dizanin)'] },
+            'فڕین': { r: 'فڕ', km: 'firîn', forms: ['دەفڕم (Ez difirim)', 'دەفڕیت (Tu difirî)', 'دەفڕێت (Ew difire)', 'دەفڕین (Em difirin)', 'دەفڕن (Hûn difirin)', 'دەفڕن (Ew difirin)'] }
+        };
+
+        const pronouns = ['من', 'تۆ', 'ئەو', 'ئێمە', 'ئێوە', 'ئەوان'];
+        let userChoices = Array(cardsData.length).fill(null);
+
+        function initGrid() {
+            const grid = document.getElementById('grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            cardsData.forEach((c, idx) => {
+                let optionsHtml = '<option value="">چاوگێک هەڵبژێرە...</option>';
+                verbsList.forEach(v => { optionsHtml += `<option value="${v}">${v}</option>`; });
+                grid.innerHTML += `
+                    <div class="match-card">
+                        <div class="icon">${c.icon}</div>
+                        <div style="font-weight:700;">${c.label}</div>
+                        <div style="font-size:0.85rem; color:var(--primary); font-style:italic;">(${c.km})</div>
+                        <select class="select-box" id="sel-${idx}" onchange="checkAns(${idx}, this.value)">
+                            ${optionsHtml}
+                        </select>
+                        <div class="fb-msg" id="fb-${idx}"></div>
+                    </div>
+                `;
+            });
+        }
+
+        function checkAns(idx, val) {
+            userChoices[idx] = val;
+            const sel = document.getElementById('sel-' + idx);
+            const fb = document.getElementById('fb-' + idx);
+            if (!val) {
+                sel.className = 'select-box';
+                fb.className = 'fb-msg';
+                fb.innerText = '';
+            } else if (val === cardsData[idx].ans) {
+                sel.className = 'select-box correct';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#065f46';
+                fb.innerText = '✅ دروستە!';
+            } else {
+                sel.className = 'select-box wrong';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#991b1b';
+                fb.innerText = '❌ هەڵەیە! دروست: «' + cardsData[idx].ans + '»';
+            }
+            updateScore();
+        }
+
+        function updateScore() {
+            let correctCount = userChoices.filter((ans, i) => ans === cardsData[i].ans).length;
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            if (scoreDisplay) scoreDisplay.innerText = correctCount + ' / ' + cardsData.length;
+        }
+
+        function resetExercise() {
+            userChoices.fill(null);
+            initGrid();
+            updateScore();
+        }
+
+        function switchTab(tabId, clickedBtn) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(b => b.classList.remove('active'));
+            
+            const panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(p => p.classList.remove('active'));
+            
+            if (clickedBtn) {
+                clickedBtn.classList.add('active');
+            } else {
+                const targetBtn = document.querySelector('[data-tab="' + tabId + '"]');
+                if (targetBtn) targetBtn.classList.add('active');
+            }
+            
+            const targetPane = document.getElementById(tabId);
+            if (targetPane) targetPane.classList.add('active');
+        }
+
+        function initConjugator() {
+            const list = document.getElementById('verbList');
+            if (!list) return;
+            list.innerHTML = '';
+            verbsList.forEach((v, idx) => {
+                list.innerHTML += `<button class="verb-btn ${idx === 0 ? 'active' : ''}" onclick="showConj('${v}', this)">${v} (${verbDetails[v].km})</button>`;
+            });
+            showConj('چوون');
+        }
+
+        function showConj(verb, btn) {
+            if (btn) {
+                document.querySelectorAll('.verb-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            const data = verbDetails[verb];
+            if (!data) return;
+            let html = `<h3 style="color:var(--primary); margin-bottom:4px;">چاوگ: ${verb} (${data.km})</h3>`;
+            html += `<div style="font-size:0.9rem; color:var(--text-muted); margin-bottom:12px;">ڕەگی ڕانەبردوو (Reh): <strong style="color:#10b981;">${data.r}</strong></div>`;
+            pronouns.forEach((p, i) => {
+                html += `<div class="conj-item"><span>${p}</span> <span>${data.forms[i]}</span></div>`;
+            });
+            const conjBox = document.getElementById('conjBox');
+            if (conjBox) conjBox.innerHTML = html;
+        }
+
+        function updateSentence() {
+            const sbjElem = document.getElementById('sbj');
+            const vrbElem = document.getElementById('vrb');
+            const objElem = document.getElementById('obj');
+            if (!sbjElem || !vrbElem || !objElem) return;
+
+            const s = sbjElem.value;
+            const v = vrbElem.value;
+            const o = objElem.value;
+
+            const mapSoranî = {
+                'من': { 'کڕین': 'دەکڕم', 'فرۆشتن': 'دەفرۆشم', 'چوون': 'دەچم', 'هێنان': 'دەهێنم', 'بڕین': 'دەبڕم' },
+                'تۆ': { 'کڕین': 'دەکڕیت', 'فرۆشتن': 'دەفرۆشیت', 'چوون': 'دەچیت', 'هێنان': 'دەهێنیت', 'بڕین': 'دەبڕیت' },
+                'ئازاد': { 'کڕین': 'دەکڕێت', 'فرۆشتن': 'دەفرۆشێت', 'چوون': 'دەچێت', 'هێنان': 'دەهێنێت', 'بڕین': 'دەبڕێت' },
+                'ئێمە': { 'کڕین': 'دەکڕین', 'فرۆشتن': 'دەفرۆشین', 'چوون': 'دەچین', 'هێنان': 'دەهێنین', 'بڕین': 'دەبڕین' },
+                'ئێوە': { 'کڕین': 'دەکڕن', 'فرۆشتن': 'دەفرۆشن', 'چوون': 'دەچن', 'هێنان': 'دەهێنن', 'بڕین': 'دەبڕن' },
+                'ئەوان': { 'کڕین': 'دەکڕن', 'فرۆشتن': 'دەفرۆشن', 'چوون': 'دەچن', 'هێنان': 'دەهێنن', 'بڕین': 'دەبڕن' }
+            };
+
+            const mapKmSbj = { 'من': 'Ez', 'تۆ': 'Tu', 'ئازاد': 'Azad', 'ئێمە': 'Em', 'ئێوە': 'Hûn', 'ئەوان': 'Ew' };
+            const mapKmObj = { 'کتێب': 'pirtûkê', 'سێو': 'sêvan', 'بۆ زانکۆ': 'bo zanîngehê', 'کاغەز': 'kaxezê' };
+            const mapKmVrb = {
+                'Ez': { 'کڕین': 'dikirim', 'فرۆشتن': 'difiroşim', 'چوون': 'diçim', 'هێنان': 'tînim', 'بڕین': 'dibirim' },
+                'Tu': { 'کڕین': 'dikirî', 'فرۆشتن': 'difiroşî', 'چوون': 'diçî', 'هێنان': 'tînî', 'بڕین': 'dibirî' },
+                'Azad': { 'کڕین': 'dikire', 'فرۆشتن': 'difiroşe', 'چوون': 'diçe', 'هێنان': 'tîne', 'بڕین': 'dibire' },
+                'Em': { 'کڕین': 'dikirin', 'فرۆشتن': 'difiroşin', 'چوون': 'diçin', 'هێنان': 'tînin', 'بڕین': 'dibirin' },
+                'Hûn': { 'کڕین': 'dikirin', 'فرۆشتن': 'difiroşin', 'چوون': 'diçin', 'هێنان': 'tînin', 'بڕین': 'dibirin' },
+                'Ew': { 'کڕین': 'dikirin', 'فرۆشتن': 'difiroşin', 'چوون': 'diçin', 'هێنان': 'tînin', 'بڕین': 'dibirin' }
+            };
+
+            const kmS = mapKmSbj[s];
+            const resS = document.getElementById('resSoranî');
+            const resK = document.getElementById('resKurmanjî');
+            if (resS) resS.innerText = `${s} ${o} ${mapSoranî[s][v]}.`;
+            if (resK) resK.innerText = `${kmS} ${mapKmObj[o]} ${mapKmVrb[kmS][v]}.`;
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            document.getElementById('themeBtn').innerText = next === 'dark' ? '☀️ دۆخی ڕووناک' : '🌙 دۆخی تاریک';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initGrid();
+            initConjugator();
+            updateSentence();
+        });
+    </script>
+</body>
+</html>

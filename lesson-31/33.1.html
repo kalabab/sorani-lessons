@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وانەی کوردیی سۆرانی - پەڕەی ۳۳ | ڕستەی پرسیاری و نەرێ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --error: #ef4444;
+            --error-light: #fee2e2;
+            --accent: #8b5cf6;
+            --accent-light: #ede9fe;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --radius: 16px;
+        }
+
+        [data-theme="dark"] {
+            --bg-main: #0b0f19;
+            --bg-card: #151d2f;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #243049;
+            --primary-light: #1e293b;
+            --success-light: #064e3b;
+            --error-light: #7f1d1d;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); line-height: 1.75; padding-bottom: 70px; }
+
+        header {
+            background: linear-gradient(135deg, #1e40af, #3b82f6, #0d9488);
+            color: white; padding: 30px 20px; text-align: center; position: relative;
+            box-shadow: var(--shadow); border-bottom: 4px solid #f59e0b;
+        }
+
+        .theme-btn {
+            position: absolute; top: 16px; left: 16px; background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4); color: white; padding: 6px 12px;
+            border-radius: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 700;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 20px 16px; }
+
+        .score-box {
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 14px 20px; margin-bottom: 20px; display: flex; justify-content: space-between;
+            align-items: center; box-shadow: var(--shadow); flex-wrap: wrap; gap: 12px;
+        }
+
+        .score-pill { background: var(--primary-light); color: var(--primary); font-weight: 800; font-size: 1.15rem; padding: 4px 14px; border-radius: 10px; }
+
+        .nav-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 20px; }
+        .tab-btn {
+            background: var(--bg-card); border: 1.5px solid var(--border); color: var(--text-muted);
+            padding: 10px 16px; border-radius: 12px; font-weight: 700; cursor: pointer; white-space: nowrap;
+        }
+        .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow); }
+        .card-title { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 14px; }
+        .desc { background: var(--bg-main); padding: 12px 16px; border-radius: 10px; border-right: 4px solid var(--primary); margin-bottom: 20px; font-size: 0.95rem; color: var(--text-muted); }
+
+        .audio-box {
+            background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(16,185,129,0.06));
+            border: 1.5px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+        }
+
+        .audio-main-btn {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none;
+            padding: 9px 18px; border-radius: 10px; font-weight: 800; font-size: 0.95rem; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+
+        .speak-btn-small {
+            background: var(--bg-card); border: 1.5px solid var(--primary); color: var(--primary);
+            padding: 4px 10px; border-radius: 8px; font-size: 0.85rem; font-weight: 700; cursor: pointer;
+            display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; vertical-align: middle;
+        }
+        .speak-btn-small:hover { background: var(--primary); color: white; }
+        .speak-btn-small.playing { background: var(--success); color: white; border-color: var(--success); }
+
+        .interactive-row {
+            background: var(--bg-main); border: 1px solid var(--border); border-radius: 12px;
+            padding: 14px 16px; margin-bottom: 12px;
+        }
+
+        .row-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-weight: 700; font-size: 1.05rem; }
+
+        .input-inline {
+            background: var(--bg-card); border: 1.5px solid var(--border); color: var(--text-main);
+            padding: 8px 12px; border-radius: 8px; font-weight: 700; font-size: 1rem; width: 100%;
+            margin-top: 8px; outline: none; direction: rtl;
+        }
+        .input-inline:focus { border-color: var(--primary); }
+        .input-inline.correct { border-color: var(--success) !important; background: var(--success-light) !important; color: #065f46 !important; }
+        .input-inline.wrong { border-color: var(--error) !important; background: var(--error-light) !important; color: #991b1b !important; }
+
+        .btn-check-sm {
+            background: var(--primary); color: white; border: none; padding: 6px 14px;
+            border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.85rem; margin-top: 6px;
+        }
+
+        .fb-msg { font-size: 0.88rem; margin-top: 6px; font-weight: 700; display: none; }
+        .fb-msg.show { display: block; }
+
+        .formula-box {
+            background: linear-gradient(135deg, rgba(37,99,235,0.06), rgba(245,158,11,0.06));
+            border: 2px dashed var(--primary); border-radius: 14px; padding: 18px; text-align: center; margin-bottom: 18px;
+        }
+        .formula { font-size: 1.2rem; font-weight: 800; color: var(--primary-dark); margin: 8px 0; }
+
+        .table-wrap { overflow-x: auto; margin-top: 14px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+        th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: right; }
+        th { background: var(--bg-main); color: var(--primary); font-weight: 800; }
+
+        .verb-selector-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+        .v-chip {
+            background: var(--bg-main); border: 1.5px solid var(--border); padding: 8px 14px;
+            border-radius: 10px; font-weight: 700; cursor: pointer;
+        }
+        .v-chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .toast {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
+            background: #1e293b; color: white; padding: 10px 20px; border-radius: 9999px;
+            font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; z-index: 2000; opacity: 0;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <audio id="audio64" preload="auto">
+        <source src="6-4.mp3" type="audio/mpeg">
+        <source src="6-4.ogg" type="audio/ogg">
+    </audio>
+
+    <audio id="audio66" preload="auto">
+        <source src="6-6.mp3" type="audio/mpeg">
+        <source src="6-6.ogg" type="audio/ogg">
+    </audio>
+
+    <header>
+        <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙 دۆخی تاریک</button>
+        <div style="font-size: 0.85rem; font-weight: 700; opacity: 0.9; margin-bottom: 4px;">فێرکاریی زمانی کوردیی سۆرانی • پەڕەی ۳۳</div>
+        <h1 style="font-size: 1.8rem; font-weight: 900;">ڕستەی ڕانەبردووی سادە (پرسیار و نەرێ)</h1>
+        <p style="font-size: 0.95rem; opacity: 0.95;">ڕاهێنانی گەردانکردنی شەش کەسەکە، گۆڕینی ڕستە بۆ پرسیار (ئایا) و نەرێ (نا)</p>
+    </header>
+
+    <div class="container">
+        <div class="score-box">
+            <div>
+                <span style="font-weight: 700; color: var(--text-muted);">نمرەی گشتیی تاقیکردنەوە:</span>
+                <span class="score-pill" id="scoreDisplay">۰ / ۹</span>
+            </div>
+            <button onclick="resetAll()" style="background:var(--bg-main); border:1px solid var(--border); padding:6px 14px; border-radius:8px; cursor:pointer; font-weight:700;">🔄 دەستپێکردنەوە</button>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('tab1', this)">📝 ۱. ڕاهێنانی ۶-۲ (شەش کەسەکە)</button>
+            <button class="tab-btn" onclick="switchTab('tab2', this)">❓ ۲. ڕاهێنانی ۶-۳ (ڕستەی پرس)</button>
+            <button class="tab-btn" onclick="switchTab('tab3', this)">⛔ ۳. ڕاهێنانی ۶-۵ (ڕستەی نەرێ)</button>
+            <button class="tab-btn" onclick="switchTab('tab4', this)">📖 ۴. ڕێزمان و یاساکان</button>
+            <button class="tab-btn" onclick="switchTab('tab5', this)">📚 ۵. فەرهەنگۆک (کورمانجی)</button>
+        </div>
+
+        <!-- TAB 1: Exercise 6-2 -->
+        <div id="tab1" class="tab-pane active">
+            <div class="card">
+                <div class="card-title">📝 ڕاهێنانی ٦-٢: بۆ هەر کردارێک شەش ڕستە بۆ هەر شەش کەسەکە بنووسە</div>
+                <div class="desc"><strong>ڕێنمایی:</strong> لەم بەشەدا کردارێک هەڵبژێرە و شێوازی ڕستەسازی بۆ هەموو کەسەکان (من، تۆ، ئەو، ئێمە، ئێوە، ئەوان) ببینە.</div>
+
+                <div class="verb-selector-bar">
+                    <button class="v-chip active" onclick="showVerb62('وێنەکێشان', this)">وێنە کێشان (Wêne xêzkirin)</button>
+                    <button class="v-chip" onclick="showVerb62('کتێبهێنان', this)">کتێب هێنان (Pirtûk anîn)</button>
+                    <button class="v-chip" onclick="showVerb62('زانین', this)">زانین (Zanîn)</button>
+                    <button class="v-chip" onclick="showVerb62('شتفرۆشتن', this)">شت فرۆشتن (Tişt firotin)</button>
+                </div>
+
+                <div id="display62" style="background:var(--bg-main); border:1px solid var(--border); border-radius:12px; padding:18px;"></div>
+            </div>
+        </div>
+
+        <!-- TAB 2: Exercise 6-3 & Audio 6-4 -->
+        <div id="tab2" class="tab-pane">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">❓ ڕاهێنانی ٦-٣: ئەم ڕستانەی خوارەوە بکە بە ڕستەی پرس</div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">کۆی خاڵەکان: ۵ نمرە</span>
+                </div>
+                <div class="desc"><strong>ڕێنمایی:</strong> بە بەکارهێنانی «ئایا» و نیشانەی پرسیار (؟) ڕستەکان بکە بە پرسیار. دەتوانیت گوێ لە دەنگی فایلی ٦-٤ بگریت.</div>
+
+                <div class="audio-box">
+                    <div>
+                        <button class="audio-main-btn" onclick="playAudioFull('audio64')">▶️ پەخشی تەواوی فایلی دەنگیی ٦-٤</button>
+                        <span style="font-size:0.85rem; color:var(--text-muted); margin-right:10px;">(گۆڕینی ڕستە بۆ ڕستەی پرس)</span>
+                    </div>
+                </div>
+
+                <div id="qListContainer">
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio64', 4.5, 8.5, this)">🔊 گوێگرتن</button>
+                                <span>۱. تۆ کتێب دەهێنیت.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Tu pirtûkê tînî.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-q-0" placeholder="ڕستەی پرسیاری لێرە بنووسە... (ئایا تۆ کتێب دەهێنیت؟)">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkQ(0)">پشکنین (Check)</button>
+                            <button onclick="revealQ(0)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-q-0"></div>
+                    </div>
+
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio64', 9.0, 13.0, this)">🔊 گوێگرتن</button>
+                                <span>۲. ئەو دەزانێت.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Ew dizane.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-q-1" placeholder="ڕستەی پرسیاری لێرە بنووسە...">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkQ(1)">پشکنین (Check)</button>
+                            <button onclick="revealQ(1)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-q-1"></div>
+                    </div>
+
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio64', 13.5, 18.0, this)">🔊 گوێگرتن</button>
+                                <span>۳. ئەوان شت دەفرۆشن.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Ew tiştan difiroşin.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-q-2" placeholder="ڕستەی پرسیاری لێرە بنووسە...">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkQ(2)">پشکنین (Check)</button>
+                            <button onclick="revealQ(2)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-q-2"></div>
+                    </div>
+
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio64', 18.5, 23.0, this)">🔊 گوێگرتن</button>
+                                <span>۴. ئەو وێنە دەکێشێت.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Ew wêneyê xêz dike.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-q-3" placeholder="ڕستەی پرسیاری لێرە بنووسە...">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkQ(3)">پشکنین (Check)</button>
+                            <button onclick="revealQ(3)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-q-3"></div>
+                    </div>
+
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio64', 23.5, 28.5, this)">🔊 گوێگرتن</button>
+                                <span>۵. تۆ دەچیت بۆ قوتابخانە.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Tu diçî dibistanê.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-q-4" placeholder="ڕستەی پرسیاری لێرە بنووسە...">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkQ(4)">پشکنین (Check)</button>
+                            <button onclick="revealQ(4)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-q-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: Exercise 6-5 & Audio 6-6 -->
+        <div id="tab3" class="tab-pane">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">⛔ ڕاهێنانی ٦-٥: ئەم ڕستانەی خوارەوە بکە بە ڕستەی نەرێ</div>
+                    <span style="font-size: 0.85rem; color: var(--text-muted);">کۆی خاڵەکان: ۴ نمرە</span>
+                </div>
+                <div class="desc"><strong>ڕێنمایی:</strong> بە گۆڕینی پێشگری «دە» بۆ «نا»، ڕستەکان بکە بە نەرێ (منفی). دەتوانیت گوێ لە فایلی دەنگیی ٦-٦ بگریت.</div>
+
+                <div class="audio-box">
+                    <div>
+                        <button class="audio-main-btn" onclick="playAudioFull('audio66')">▶️ پەخشی تەواوی فایلی دەنگیی ٦-٦</button>
+                        <span style="font-size:0.85rem; color:var(--text-muted); margin-right:10px;">(گۆڕینی ڕستەی ئەرێ بۆ نەرێ)</span>
+                    </div>
+                </div>
+
+                <div id="negListContainer">
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio66', 4.0, 8.5, this)">🔊 گوێگرتن</button>
+                                <span>۱. تۆ کتێب دەهێنیت.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Tu pirtûkê tînî.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-n-0" placeholder="ڕستەی نەرێ لێرە بنووسە... (تۆ کتێب ناهێنیت)">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkN(0)">پشکنین (Check)</button>
+                            <button onclick="revealN(0)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-n-0"></div>
+                    </div>
+
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio66', 9.0, 13.5, this)">🔊 گوێگرتن</button>
+                                <span>۲. ئەو دەزانێت.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Ew dizane.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-n-1" placeholder="ڕستەی نەرێ لێرە بنووسە...">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkN(1)">پشکنین (Check)</button>
+                            <button onclick="revealN(1)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-n-1"></div>
+                    </div>
+
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio66', 14.0, 18.5, this)">🔊 گوێگرتن</button>
+                                <span>۳. ئەوان شت دەفرۆشن.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Ew tiştan difiroşin.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-n-2" placeholder="ڕستەی نەرێ لێرە بنووسە...">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkN(2)">پشکنین (Check)</button>
+                            <button onclick="revealN(2)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-n-2"></div>
+                    </div>
+
+                    <div class="interactive-row">
+                        <div class="row-header">
+                            <div>
+                                <button class="speak-btn-small" onclick="playAudioSegment('audio66', 19.0, 24.5, this)">🔊 گوێگرتن</button>
+                                <span>۴. ئەو وێنە دەکێشێت.</span>
+                            </div>
+                            <span style="font-size:0.85rem; color:var(--text-muted); font-style:italic;">Ew wêneyê xêz dike.</span>
+                        </div>
+                        <input type="text" class="input-inline" id="in-n-3" placeholder="ڕستەی نەرێ لێرە بنووسە...">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="btn-check-sm" onclick="checkN(3)">پشکنین (Check)</button>
+                            <button onclick="revealN(3)" style="background:transparent; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.85rem;">نیشاندانی وەڵام</button>
+                        </div>
+                        <div class="fb-msg" id="fb-n-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: Grammar -->
+        <div id="tab4" class="tab-pane">
+            <div class="card">
+                <div class="card-title">📖 ڕێزمانی پەڕەی ۳۳: یاسای پرسیار و نەرێ</div>
+
+                <div class="formula-box">
+                    <div style="font-weight:700; color:var(--text-muted);">۱. یاسای دروستکردنی پرسیار (Hevoka Pirsiyarî):</div>
+                    <div class="formula">ئایا + ڕستەی ئەرێ + ؟ (ئایا تۆ دەچیت؟ / Gelo tu diçî?)</div>
+                </div>
+
+                <div class="formula-box" style="border-color:#ef4444;">
+                    <div style="font-weight:700; color:var(--text-muted);">۲. یاسای دروستکردنی نەرێ (Hevoka Neyînî):</div>
+                    <div class="formula" style="color:#b91c1c;">گۆڕینی (دە) بۆ (نا) ➔ نا + ڕەگ + جێناو (ناچم / ناکڕم / نادەم)</div>
+                </div>
+
+                <div class="desc">
+                    <h4 style="color:var(--primary); margin-bottom:6px;">💡 تێبینیی ڕێزمانی:</h4>
+                    <ul style="margin: 8px 24px; line-height: 2;">
+                        <li><strong>پرسیار:</strong> بە بەکارهێنانی <strong>(ئایا)</strong> و گۆڕینی ئاوازی قسەکردن (Intonation) یان یەکێک لە وشەکانی پرس، ڕستە دەکرێتە پرسیاری.</li>
+                        <li><strong>نەرێ:</strong> بە گۆڕینی <strong>(دە)</strong>ی کاتی ڕانەبردوو بۆ <strong>(نا)</strong> ڕستەکە دەبێتە نەرێ (منفی).</li>
+                        <li><strong>جێناوی لکاو:</strong> لەگەڵ کرداری ڕانەبردوودا، هەمیشە جێناوی لکاوی <strong>دەستەی دووەم (ـم، ـیت، ـێت، ـین، ـن، ـن)</strong> بەکار دێت.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: Vocabulary -->
+        <div id="tab5" class="tab-pane">
+            <div class="card">
+                <div class="card-title">📚 فەرهەنگۆکی کردار و ڕستەکانی پەڕەی ۳۳ (سۆرانی - کورمانجی)</div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr><th>ڕستەی ئەرێ (Soranî)</th><th>ڕستەی نەرێ (Soranî)</th><th>ڕستەی پرسیاری (Soranî)</th><th>واتا بە کوردیی کورمانجی</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>تۆ کتێب دەهێنیت</td><td>تۆ کتێب <strong>ناهێنیت</strong></td><td><strong>ئایا</strong> تۆ کتێب دەهێنیت؟</td><td>Tu pirtûkê tînî / Gelo tu pirtûkê tînî?</td></tr>
+                            <tr><td>ئەو دەزانێت</td><td>ئەو <strong>نازانێت</strong></td><td><strong>ئایا</strong> ئەو دەزانێت؟</td><td>Ew dizane / Gelo ew dizane?</td></tr>
+                            <tr><td>ئەوان شت دەفرۆشن</td><td>ئەوان شت <strong>نافڕۆشن</strong></td><td><strong>ئایا</strong> ئەوان شت دەفرۆشن؟</td><td>Ew tiştan difiroşin / Gelo ew difiroşin?</td></tr>
+                            <tr><td>ئەو وێنە دەکێشێت</td><td>ئەو وێنە <strong>ناکێشێت</strong></td><td><strong>ئایا</strong> ئەو وێنە دەکێشێت؟</td><td>Ew wêneyê xêz dike / Gelo ew xêz dike?</td></tr>
+                            <tr><td>تۆ دەچیت بۆ قوتابخانە</td><td>تۆ <strong>ناچیت</strong> بۆ قوتابخانە</td><td><strong>ئایا</strong> تۆ دەچیت بۆ قوتابخانە؟</td><td>Tu diçî dibistanê / Gelo tu diçî dibistanê?</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">پەیام</div>
+
+    <script>
+        const verbs62Data = {
+            'وێنەکێشان': {
+                kmTitle: 'Wêne xêzkirin',
+                rows: [
+                    { pr: 'من', s: 'من وێنە دەکێشم.', km: 'Ez wêneyê xêz dikim.' },
+                    { pr: 'تۆ', s: 'تۆ وێنە دەکێشیت.', km: 'Tu wêneyê xêz dikî.' },
+                    { pr: 'ئەو', s: 'ئەو وێنە دەکێشێت.', km: 'Ew wêneyê xêz dike.' },
+                    { pr: 'ئێمە', s: 'ئێمە وێنە دەکێشین.', km: 'Em wêneyê xêz dikin.' },
+                    { pr: 'ئێوە', s: 'ئێوە وێنە دەکێشن.', km: 'Hûn wêneyê xêz dikin.' },
+                    { pr: 'ئەوان', s: 'ئەوان وێنە دەکێشن.', km: 'Ew wêneyê xêz dikin.' }
+                ]
+            },
+            'کتێبهێنان': {
+                kmTitle: 'Pirtûk anîn',
+                rows: [
+                    { pr: 'من', s: 'من کتێب دەهێنم.', km: 'Ez pirtûkê tînim.' },
+                    { pr: 'تۆ', s: 'تۆ کتێب دەهێنیت.', km: 'Tu pirtûkê tînî.' },
+                    { pr: 'ئەو', s: 'ئەو کتێب دەهێنێت.', km: 'Ew pirtûkê tîne.' },
+                    { pr: 'ئێمە', s: 'ئێمە کتێب دەهێنین.', km: 'Em pirtûkê tînin.' },
+                    { pr: 'ئێوە', s: 'ئێوە کتێب دەهێنن.', km: 'Hûn pirtûkê tînin.' },
+                    { pr: 'ئەوان', s: 'ئەوان کتێب دەهێنن.', km: 'Ew pirtûkê tînin.' }
+                ]
+            },
+            'زانین': {
+                kmTitle: 'Zanîn',
+                rows: [
+                    { pr: 'من', s: 'من دەزانم.', km: 'Ez dizanim.' },
+                    { pr: 'تۆ', s: 'تۆ دەزانیت.', km: 'Tu dizanî.' },
+                    { pr: 'ئەو', s: 'ئەو دەزانێت.', km: 'Ew dizane.' },
+                    { pr: 'ئێمە', s: 'ئێمە دەزانین.', km: 'Em dizanin.' },
+                    { pr: 'ئێوە', s: 'ئێوە دەزانن.', km: 'Hûn dizanin.' },
+                    { pr: 'ئەوان', s: 'ئەوان دەزانن.', km: 'Ew dizanin.' }
+                ]
+            },
+            'شتفرۆشتن': {
+                kmTitle: 'Tişt firotin',
+                rows: [
+                    { pr: 'من', s: 'من شت دەفرۆشم.', km: 'Ez tiştan difiroşim.' },
+                    { pr: 'تۆ', s: 'تۆ شت دەفرۆشیت.', km: 'Tu tiştan difiroşî.' },
+                    { pr: 'ئەو', s: 'ئەو شت دەفرۆشێت.', km: 'Ew tiştan difiroşe.' },
+                    { pr: 'ئێمە', s: 'ئێمە شت دەفرۆشین.', km: 'Em tiştan difiroşin.' },
+                    { pr: 'ئێوە', s: 'ئێوە شت دەفرۆشن.', km: 'Hûn tiştan difiroşin.' },
+                    { pr: 'ئەوان', s: 'ئەوان شت دەفرۆشن.', km: 'Ew tiştan difiroşin.' }
+                ]
+            }
+        };
+
+        const qAnswers = [
+            'ئایا تۆ کتێب دەهێنیت؟',
+            'ئایا ئەو دەزانێت؟',
+            'ئایا ئەوان شت دەفرۆشن؟',
+            'ئایا ئەو وێنە دەکێشێت؟',
+            'ئایا تۆ دەچیت بۆ قوتابخانە؟'
+        ];
+        const qKurmanji = [
+            'Gelo tu pirtûkê tînî?',
+            'Gelo ew dizane?',
+            'Gelo ew tiştan difiroşin?',
+            'Gelo ew wêneyê xêz dike?',
+            'Gelo tu diçî dibistanê?'
+        ];
+        let userQ = [false, false, false, false, false];
+
+        const nAnswers = [
+            ['تۆ کتێب ناهێنیت', 'تۆ کتێب ناهێنی'],
+            ['ئەو نازانێت', 'ئەو نازانێ'],
+            ['ئەوان شت نافڕۆشن', 'ئەوان شت نافروشن'],
+            ['ئەو وێنە ناکێشێت', 'ئەو وێنە ناکێشێ']
+        ];
+        const nKurmanji = [
+            'Tu pirtûkê natînî.',
+            'Ew nizane.',
+            'Ew tiştan nafiroşin.',
+            'Ew wêneyê xêz nake.'
+        ];
+        let userN = [false, false, false, false];
+
+        function cleanText(t) {
+            return t.replace(/[؟?.,،!]/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        function checkQ(idx) {
+            const input = document.getElementById('in-q-' + idx);
+            const fb = document.getElementById('fb-q-' + idx);
+            const val = input.value.trim();
+
+            if (cleanText(val) === cleanText(qAnswers[idx])) {
+                input.className = 'input-inline correct';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#065f46';
+                fb.innerHTML = '✅ <strong>دروستە!</strong> (' + qKurmanji[idx] + ')';
+                userQ[idx] = true;
+            } else {
+                input.className = 'input-inline wrong';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#991b1b';
+                fb.innerHTML = '❌ <strong>هەڵەیە!</strong> دروست: «' + qAnswers[idx] + '»';
+                userQ[idx] = false;
+            }
+            updateScore();
+        }
+
+        function revealQ(idx) {
+            document.getElementById('in-q-' + idx).value = qAnswers[idx];
+            checkQ(idx);
+        }
+
+        function checkN(idx) {
+            const input = document.getElementById('in-n-' + idx);
+            const fb = document.getElementById('fb-n-' + idx);
+            const val = input.value.trim();
+
+            const isMatch = nAnswers[idx].some(ans => cleanText(val) === cleanText(ans));
+            if (isMatch) {
+                input.className = 'input-inline correct';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#065f46';
+                fb.innerHTML = '✅ <strong>دروستە!</strong> (' + nKurmanji[idx] + ')';
+                userN[idx] = true;
+            } else {
+                input.className = 'input-inline wrong';
+                fb.className = 'fb-msg show';
+                fb.style.color = '#991b1b';
+                fb.innerHTML = '❌ <strong>هەڵەیە!</strong> دروست: «' + nAnswers[idx][0] + '»';
+                userN[idx] = false;
+            }
+            updateScore();
+        }
+
+        function revealN(idx) {
+            document.getElementById('in-n-' + idx).value = nAnswers[idx][0];
+            checkN(idx);
+        }
+
+        function updateScore() {
+            const score = userQ.filter(Boolean).length + userN.filter(Boolean).length;
+            const total = userQ.length + userN.length;
+            document.getElementById('scoreDisplay').innerText = score + ' / ' + total;
+        }
+
+        function resetAll() {
+            userQ = [false, false, false, false, false];
+            userN = [false, false, false, false];
+            for (let i = 0; i < 5; i++) {
+                const inEl = document.getElementById('in-q-' + i);
+                if (inEl) { inEl.value = ''; inEl.className = 'input-inline'; }
+                const fb = document.getElementById('fb-q-' + i);
+                if (fb) { fb.className = 'fb-msg'; fb.innerText = ''; }
+            }
+            for (let j = 0; j < 4; j++) {
+                const inEl = document.getElementById('in-n-' + j);
+                if (inEl) { inEl.value = ''; inEl.className = 'input-inline'; }
+                const fb = document.getElementById('fb-n-' + j);
+                if (fb) { fb.className = 'fb-msg'; fb.innerText = ''; }
+            }
+            updateScore();
+            showToast('ڕاهێنانەکان لەسەرەتاوە دەستیان پێکردەوە!');
+        }
+
+        function showVerb62(verbKey, btn) {
+            document.querySelectorAll('.v-chip').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const data = verbs62Data[verbKey];
+            let html = `<h3 style="color:var(--primary); margin-bottom:10px;">کردار: ${verbKey} <span style="font-size:0.9rem; color:var(--text-muted);">(${data.kmTitle})</span></h3>`;
+            data.rows.forEach(r => {
+                html += `
+                    <div style="background:var(--bg-card); border:1px solid var(--border); padding:10px 14px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:700; color:var(--primary);">${r.pr}</span>
+                        <span style="font-weight:700; font-size:1.05rem;">${r.s}</span>
+                        <span style="font-size:0.9rem; color:var(--text-muted); font-style:italic;">${r.km}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('display62').innerHTML = html;
+        }
+
+        function switchTab(tabId, clickedBtn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            clickedBtn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        let activeTimeout = null;
+        function playAudioSegment(audioId, startSec, endSec, btn) {
+            const audio = document.getElementById(audioId);
+            if (!audio) return;
+
+            document.querySelectorAll('audio').forEach(a => { if (a !== audio) a.pause(); });
+            if (activeTimeout) { clearTimeout(activeTimeout); activeTimeout = null; }
+
+            document.querySelectorAll('.speak-btn-small').forEach(b => b.classList.remove('playing'));
+
+            audio.currentTime = startSec;
+            audio.play().then(() => {
+                if (btn) btn.classList.add('playing');
+                showToast('🔊 دەنگ پەخش دەکرێت...');
+                const duration = (endSec - startSec) * 1000;
+                activeTimeout = setTimeout(() => {
+                    audio.pause();
+                    if (btn) btn.classList.remove('playing');
+                }, duration);
+            }).catch(e => {
+                showToast('فایلی دەنگی لە تەنیشت ئەم پەڕەیە نەدۆزرایەوە.');
+            });
+        }
+
+        function playAudioFull(audioId) {
+            const audio = document.getElementById(audioId);
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().then(() => {
+                    showToast('🔊 پەخشی تەواوی فایلی دەنگی...');
+                }).catch(() => {
+                    showToast('فایلی دەنگی نەدۆزرایەوە.');
+                });
+            }
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            document.getElementById('themeBtn').innerText = next === 'dark' ? '☀️ دۆخی ڕووناک' : '🌙 دۆخی تاریک';
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.innerText = msg;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2500);
+            }
+        }
+
+        window.onload = function() {
+            showVerb62('وێنەکێشان');
+        };
+    </script>
+</body>
+</html>
